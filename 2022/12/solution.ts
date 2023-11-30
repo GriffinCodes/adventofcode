@@ -1,5 +1,4 @@
-import { ALPHABET, deepClone, Direction, GridCoordinate, NEWLINE, readFile, pathSymbols, getPathSymbol } from "../../shared/util";
-import { Dir } from "fs";
+import { ALPHABET, ansi, avg, Color, deepClone, Direction, getPathSymbol, GridCoordinate, NEWLINE, readFile } from "../../shared/util";
 
 let example = false;
 
@@ -8,11 +7,6 @@ type Path = {
 	steps: Step[]
 	timesVisitedLetter: { letter: { count: number } }[]
 };
-
-let ANSI_RESET = "\u001B[0m";
-let ANSI_RED = "\u001B[31m";
-let ANSI_GREEN = "\u001B[32m";
-let ANSI_YELLOW = "\u001B[33m";
 
 let grid: string[][] = [];
 let emptyGrid: string[][] = [];
@@ -57,10 +51,10 @@ function printPath(message: string, current: GridCoordinate, path: Path) {
 	let lastStep: Step = {coordinate: undefined, direction: Direction.R};
 	path.steps.forEach(step => {
 		let symbol = getPathSymbol(lastStep.direction, step.direction);
-		gridCopy[step.coordinate.row][step.coordinate.col] = ANSI_YELLOW + symbol + ANSI_RESET;
+		gridCopy[step.coordinate.row][step.coordinate.col] = ansi(Color.YELLOW, symbol);
 		lastStep = step;
 	});
-	gridCopy[current.row][current.col] = ANSI_RED + "#" + ANSI_RESET;
+	gridCopy[current.row][current.col] = ansi(Color.RED, "#");
 	console.log(message);
 	gridCopy.forEach(row => console.log(row.join("")));
 }
@@ -75,16 +69,73 @@ function hasVisited(path: { coordinate: GridCoordinate; direction: Direction }[]
 	return path.find(step => letterAt(step.coordinate) == c);
 }
 
-
 let steps = 0;
 let timer = Date.now();
-function exploreNeighbors(current: GridCoordinate, path: Path) {
+
+type Lookahead = {
+	steps: {
+
+	}[]
+}
+
+function debug(...message: any) {
+	// console.log(...message);
+}
+
+function canMoveTo(from: GridCoordinate, direction: Direction, to: GridCoordinate, path: Path) {
+	let neighborCoordinate = grid[to.row]?.[to.col];
+	if (!neighborCoordinate) {
+		debug("Outside of grid", to);
+		return false;
+	}
+
+	if (path.steps.find(step => step.coordinate.row == to.row && step.coordinate.col == to.col)) {
+		debug("Already explored", to);
+		return false;
+	}
+
+	let letterAtFrom = letterAt(from);
+	let letterAtTo = letterAt(to);
+	let elevationAtFrom = elevationAt(from);
+	let elevationAtTo = elevationAt(to);
+	let elevationDifference = elevationAtTo - elevationAtFrom;
+	let describeStep = "(" + from + "->" + letterAtTo + ")";
+
+	if (elevationDifference > 1) {
+		debug("Elevation difference too great", elevationDifference, describeStep)
+		return false;
+	}
+
+	if (!example) {
+		if (letterAtFrom == 'c' && direction == Direction.L) {
+			debug("Ignoring left while c");
+			return false;
+		}
+		if (letterAtFrom == 'b' && direction == Direction.D) {
+			debug("Ignoring down while b");
+			return false;
+		}
+
+		let allowStepDown = letterAtFrom == 'r' && letterAtTo == 'p';
+		if (!allowStepDown && elevationDifference < 0) {
+			debug("Ignoring too far step down " + describeStep);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function exploreNeighbors(current: GridCoordinate, path: Path, breakCondition: () => boolean) {
+	if (breakCondition()) {
+		return;
+	}
+
 	++steps;
 	let letterAtCurrent = letterAt(current);
-	let elevationAtCurrent = elevationAt(current);
 
-	// console.log();
-	// console.log("Exploring neighbors of", current);
+	debug();
+	debug("Exploring neighbors of", current);
 
 	if (bestPath.steps.length > 0 && path.steps.length > bestPath.steps.length) {
 		return;
@@ -93,7 +144,6 @@ function exploreNeighbors(current: GridCoordinate, path: Path) {
 	let timesVisitedLetterOnBestPath = timesVisitedOnBestPath[letterAtCurrent]?.count;
 	let timesVisitedLetterOnCurrentPath = path.timesVisitedLetter[letterAtCurrent]?.count;
 
-	// console.log("Current path:", path.map(step => step.direction.arrow).join(""))
 	if (steps % 100000 == 0) {
 		let now = Date.now();
 		printPath("Steps: " + steps +
@@ -106,78 +156,60 @@ function exploreNeighbors(current: GridCoordinate, path: Path) {
 		timer = now;
 	}
 
-	let directions: {direction: Direction, neighbor: GridCoordinate, distance: number}[] = [];
+	let directions: {direction: Direction, neighbor: GridCoordinate, indexOnBestPath: number, distance: number}[] = [];
 	for (let direction of Direction.cardinals()) {
 		let neighbor: GridCoordinate = {row: current.row + direction.vertical, col: current.col + direction.horizontal}
-		directions.push({direction: direction, neighbor: neighbor, distance: distanceSquaredToEnd(neighbor)});
+		let neighborsIndexOnBestPath = bestPath.steps.reverse().indexOf(bestPath.steps.find(step => step.coordinate.row == neighbor.row && step.coordinate.col == neighbor.col))
+		directions.push({direction: direction, neighbor: neighbor, indexOnBestPath: neighborsIndexOnBestPath, distance: distanceSquaredToEnd(neighbor)});
 	}
 
-	for (let directionData of directions.sort((d1, d2) => d1.distance - d2.distance)) {
+	let sorted = directions.sort((d1, d2) => {
+		let distanceComparison = d1.distance - d2.distance;
+		if (bestPath.steps.length == 0)
+			return distanceComparison;
+		if (d1.indexOnBestPath < 0 || d2.indexOnBestPath < 0)
+			return distanceComparison;
+		if (d1.indexOnBestPath == d2.indexOnBestPath)
+			return distanceComparison;
+
+		return d1.indexOnBestPath - d2.indexOnBestPath;
+	});
+
+	for (let directionData of sorted) {
 		let direction = directionData.direction;
 		let neighbor = directionData.neighbor;
+
+		if (!canMoveTo(current, direction, neighbor, path)) {
+			continue;
+		}
+
+		if (!["pqr"].includes(letterAt(current))) {
+			if ((timesVisitedLetterOnBestPath - 1) < timesVisitedLetterOnCurrentPath) {
+				return false;
+			}
+		}
+
 		let newPath = {steps: [...path.steps], timesVisitedLetter: deepClone(path.timesVisitedLetter)};
-
-		let neighborCoordinate = grid[neighbor.row]?.[neighbor.col];
-		if (!neighborCoordinate) {
-			// console.log("Outside of grid", neighbor);
-			continue;
-		}
-
-		if (newPath.steps.find(step => step.coordinate.row == neighbor.row && step.coordinate.col == neighbor.col)) {
-			// console.log("Already explored", neighbor);
-			continue;
-		}
-		let letterAtNeighbor = letterAt(neighbor);
-		let elevationAtNeighbor = elevationAt(neighbor);
-		let elevationDifference = elevationAtNeighbor - elevationAtCurrent;
-
-		let describeStep = "(" + letterAtCurrent + "->" + letterAtNeighbor + ")";
-
-		if (elevationDifference > 1) {
-			// console.log("Elevation difference too great", elevationDifference, describeStep)
-			continue;
-		}
-
-		if (!example) {
-			if (letterAtCurrent == 'c' && direction == Direction.L) {
-				// console.log("Ignoring left while c");
-				continue;
-			}
-			if (letterAtCurrent == 'b' && direction == Direction.D) {
-				// console.log("Ignoring down while b");
-				continue;
-			}
-
-			let allowStepDown = letterAtCurrent == 'r' && letterAtNeighbor == 'p';
-			if (!allowStepDown && elevationDifference < 0) {
-				// console.log("Ignoring too far step down " + describeStep);
-				continue;
-			}
-
-			if (!["pqr"].includes(letterAtCurrent)) {
-				if ((timesVisitedLetterOnBestPath - 1) < timesVisitedLetterOnCurrentPath) {
-					continue;
-				}
-			}
-		}
-
 		newPath.steps.push({coordinate: current, direction: direction});
 		newPath.timesVisitedLetter[letterAtCurrent] = {count: (timesVisitedLetterOnCurrentPath || 0) + 1};
-		if (letterAtNeighbor == 'E') {
-			// console.log("  Reached end in", newPath.length, "steps")
+		if (letterAt(neighbor) == 'E') {
+			debug("  Reached end in", newPath.steps.length, "steps")
 			if (bestPath.steps.length == 0 || bestPath.steps.length > newPath.steps.length) {
-				// console.log("  Best match")
+				debug("  Best match")
 				bestPath = newPath;
 				computeTimesVisitedOnBestPath();
 			}
 			continue;
 		}
 
-		// console.log("Found possible next step " + direction.arrow + ", continuing")
-		exploreNeighbors(neighbor, newPath);
+		debug("Found possible next step " + direction.arrow + ", continuing")
+		exploreNeighbors(neighbor, newPath, breakCondition);
 	}
 }
 
-exploreNeighbors(starting, {steps: [], timesVisitedLetter: []});
+exploreNeighbors(starting, {steps: [], timesVisitedLetter: []}, () => bestPath.steps.length == 514);
+exploreNeighbors(starting, {steps: [], timesVisitedLetter: []}, () => bestPath.steps.length == 508);
+exploreNeighbors(starting, {steps: [], timesVisitedLetter: []}, () => bestPath.steps.length == 490);
+exploreNeighbors(starting, {steps: [], timesVisitedLetter: []}, () => false);
 
 printPath("Best path (" + bestPath.steps.length + "):", ending, bestPath);

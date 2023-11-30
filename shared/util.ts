@@ -1,8 +1,21 @@
+import exp = require("constants");
+
 const fs = require('fs');
 
 export const NEWLINE = /\r?\n/;
 export const DOUBLE_NEWLINE = /\r?\n\r?\n/;
 export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+
+export class Color {
+	static RESET = "\u001B[0m";
+	static RED = "\u001B[31m";
+	static GREEN = "\u001B[32m";
+	static YELLOW = "\u001B[33m";
+}
+
+export function ansi(color: string, text: string) {
+	return color + text + Color.RESET;
+}
 
 export function readFile(filename: string): string {
 	return fs.readFileSync(filename, 'utf8');
@@ -10,6 +23,10 @@ export function readFile(filename: string): string {
 
 export function sum(numbers: number[]) {
 	return numbers.reduce((acc, cur) => acc + cur, 0);
+}
+
+export function avg(numbers: number[]) {
+	return numbers.reduce((a, b) => a + b) / numbers.length;
 }
 
 export function deepClone(obj: any) {
