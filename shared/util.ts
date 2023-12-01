@@ -126,3 +126,32 @@ export function shuffle(array) {
 	return array;
 }
 
+export class Iterator {
+	index = 0;
+	keys = [];
+
+	constructor(private iterable) {
+		if (!iterable || typeof iterable != "object")
+			return;
+		if ('splice' in iterable && 'join' in iterable) { // array
+			while (this.keys.length < iterable.length)
+				this.keys.push(this.keys.length);
+		} else { // map
+			for (let key in iterable)
+				if (iterable.hasOwnProperty(key))
+					this.keys.push(key);
+		}
+	}
+
+	next() {
+		if (this.index < this.keys.length)
+			return this.iterable[this.keys[this.index++]];
+		else
+			throw { name: "StopIteration" };
+	}
+
+	hasNext() {
+		return this.index < this.keys.length;
+	}
+}
+
