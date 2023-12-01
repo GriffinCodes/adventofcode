@@ -1,6 +1,4 @@
-import { ArithmeticOperator, NEWLINE, readFile } from "../../shared/util";
-
-let example = false
+import { ArithmeticOperator, NEWLINE, readFile, example } from "../../shared/util";
 
 class Monkey {
 	items: number[];
@@ -13,7 +11,7 @@ class Monkey {
 
 let monkeys: Monkey[] = [];
 let monkey;
-readFile(example ? 'example' : 'input').split(NEWLINE).forEach(line => {
+readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 	line = line.trim();
 	if (line.startsWith("Monkey")) {
 		monkey = new Monkey();

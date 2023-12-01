@@ -1,6 +1,5 @@
-import { Direction, NEWLINE, readFile } from "../../shared/util";
+import { Direction, NEWLINE, readFile, example } from "../../shared/util";
 
-let example = false;
 let EMPTY_CHAR = ".";
 
 class Instruction {
@@ -17,7 +16,7 @@ class Knot {
 }
 
 class Grid {
-	gridSize = example ? 50 : 500;
+	gridSize = example() ? 50 : 500;
 	middle = Math.floor(this.gridSize / 2);
 
 	knots: Knot[] = [];
@@ -116,7 +115,7 @@ class Grid {
 
 let grid = new Grid();
 
-readFile(example ? 'example2' : 'input').split(NEWLINE).forEach(line => {
+readFile(example() ? 'example2' : 'input').split(NEWLINE).forEach(line => {
 	// @ts-ignore
 	let instruction = new Instruction(...line.split(" "));
 	grid.move(instruction);

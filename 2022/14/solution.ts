@@ -1,12 +1,10 @@
-import {Direction, Iterator, NEWLINE, readFile} from "../../shared/util";
-
-let example = true;
+import { Direction, Iterator, NEWLINE, readFile, example } from "../../shared/util";
 
 type Coordinate = { row: number, col: number };
 type Line = {from: Coordinate, to: Coordinate}
 let lines: Line[] = [];
 
-readFile(example ? 'example' : 'input').split(NEWLINE).forEach(line => {
+readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
     let iterator = new Iterator(line.split(" -> "))
     let from = iterator.next();
     while (iterator.hasNext()) {
@@ -40,8 +38,8 @@ class Grid {
     constructor(public lines: Line[]) {
         this.minRow = 0;
         this.maxRow = Math.max(...lines.map(line => Math.max(line.from.row, line.to.row))) + 4;
-        this.minCol = Math.min(...lines.map(line => Math.min(line.from.col, line.to.col))) - (example ? 20 : 200);
-        this.maxCol = Math.max(...lines.map(line => Math.max(line.from.col, line.to.col))) + (example ? 20 : 200);
+        this.minCol = Math.min(...lines.map(line => Math.min(line.from.col, line.to.col))) - (example() ? 20 : 200);
+        this.maxCol = Math.max(...lines.map(line => Math.max(line.from.col, line.to.col))) + (example() ? 20 : 200);
 
         this.fillGrid();
         this.drawLines(lines);

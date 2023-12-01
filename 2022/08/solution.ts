@@ -1,9 +1,7 @@
-import { NEWLINE, readFile } from "../../shared/util";
-
-let example = false;
+import { NEWLINE, readFile, example } from "../../shared/util";
 
 let forest: number[][] = [];
-readFile(example ? 'example' : 'input').split(NEWLINE).forEach(line => {
+readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 	let items = line.split("").map(number => Number(number));
 	forest.push(items);
 });

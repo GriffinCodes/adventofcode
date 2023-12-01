@@ -2,6 +2,10 @@ import exp = require("constants");
 
 const fs = require('fs');
 
+export function example() {
+	return process.argv.includes("-e") || process.argv.includes("--example");
+}
+
 export const NEWLINE = /\r?\n/;
 export const DOUBLE_NEWLINE = /\r?\n\r?\n/;
 export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';

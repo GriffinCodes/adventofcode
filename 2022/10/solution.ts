@@ -1,6 +1,4 @@
-import { NEWLINE, readFile } from "../../shared/util";
-
-let example = false
+import { NEWLINE, readFile, example } from "../../shared/util";
 
 let cycle = 1;
 let x = 1;
@@ -13,7 +11,7 @@ for (let i = 0; i < 6; i++) {
 	screen.push([])
 }
 
-readFile(example ? 'example' : 'input').split(/[(/\r?\n) ]/).forEach(line => {
+readFile(example() ? 'example' : 'input').split(/[(/\r?\n) ]/).forEach(line => {
 	if (line.length == 0) {
 		return;
 	}

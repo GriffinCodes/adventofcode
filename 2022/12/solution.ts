@@ -1,6 +1,4 @@
-import { ALPHABET, ansi, avg, Color, deepClone, Direction, getPathSymbol, GridCoordinate, NEWLINE, readFile } from "../../shared/util";
-
-let example = false;
+import { ALPHABET, ansi, avg, Color, deepClone, Direction, getPathSymbol, GridCoordinate, NEWLINE, readFile, example } from "../../shared/util";
 
 type Step = { coordinate: GridCoordinate, direction: Direction };
 type Path = {
@@ -11,7 +9,7 @@ type Path = {
 let grid: string[][] = [];
 let emptyGrid: string[][] = [];
 let starting: GridCoordinate, ending: GridCoordinate;
-readFile(example ? 'example' : 'input').split(NEWLINE).forEach(line => {
+readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 	if (line.includes("S")) {
 		starting = {row: grid.length, col: line.indexOf("S")}
 	}
@@ -106,7 +104,7 @@ function canMoveTo(from: GridCoordinate, direction: Direction, to: GridCoordinat
 		return false;
 	}
 
-	if (!example) {
+	if (!example()) {
 		if (letterAtFrom == 'c' && direction == Direction.L) {
 			debug("Ignoring left while c");
 			return false;

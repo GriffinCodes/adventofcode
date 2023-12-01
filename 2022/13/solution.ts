@@ -1,6 +1,4 @@
-import {DOUBLE_NEWLINE, isArray, isNumber, NEWLINE, readFile, sum} from "../../shared/util";
-
-let example = false;
+import { DOUBLE_NEWLINE, isArray, isNumber, NEWLINE, readFile, sum, example } from "../../shared/util";
 
 type MixedType = [number | number[] | [number[]]]
 class Pair {
@@ -62,7 +60,7 @@ function compare(left: any, right: any): Result {
 }
 
 let i = 0;
-let pairs = readFile(example ? 'example' : 'input')
+let pairs = readFile(example() ? 'example' : 'input')
     .split(DOUBLE_NEWLINE)
     .map(pair => pair.split(NEWLINE))
     .map(pair => new Pair(JSON.parse(pair[0]), JSON.parse(pair[1])));
@@ -71,7 +69,7 @@ pairs.forEach(pair => {
     pair.index = ++i;
     pair.correctOrder = compare(pair.left, pair.right).result;
 
-    if (example) {
+    if (example()) {
         console.log("== Pair ", pair.index, "==");
         console.log("Correct?:", pair.correctOrder + (pair.correctOrder != exampleAnswers[i - 1] ? " (WRONG)" : ""))
     }

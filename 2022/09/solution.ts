@@ -1,6 +1,4 @@
-import { NEWLINE, readFile } from "../../shared/util";
-
-let example = false;
+import { NEWLINE, readFile, example } from "../../shared/util";
 
 class CardinalDirection {
 	static U = new CardinalDirection("U", "D", -1, 0);
@@ -25,7 +23,7 @@ class Instruction {
 }
 
 class Grid {
-	gridSize = example ? 11 : 500;
+	gridSize = example() ? 11 : 500;
 	middle = Math.floor(this.gridSize / 2);
 
 	grid: string[][] = [];
@@ -83,7 +81,7 @@ class Grid {
 let grid = new Grid();
 grid.print();
 
-readFile(example ? 'example' : 'input').split(NEWLINE).forEach(line => {
+readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 	// @ts-ignore
 	let instruction = new Instruction(...line.split(" "));
 	console.log(instruction);
