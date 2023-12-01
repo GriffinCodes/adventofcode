@@ -1,0 +1,172 @@
+{
+"event": "2023",
+"owner_id": 298396,
+"members": {
+"298396": {
+"stars": 2,
+"global_score": 0,
+"id": 298396,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 115760,
+"get_star_ts": 1701443058
+},
+"2": {
+"get_star_ts": 1701444230,
+"star_index": 120616
+}
+}
+},
+"local_score": 18,
+"last_star_ts": 1701444230,
+"name": "Robert Renaud"
+},
+"3207379": {
+"last_star_ts": 0,
+"name": "mikejones0925",
+"local_score": 0,
+"completion_day_level": {},
+"global_score": 0,
+"stars": 0,
+"id": 3207379
+},
+"3207434": {
+"stars": 1,
+"global_score": 0,
+"id": 3207434,
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701451355,
+"star_index": 149159
+}
+}
+},
+"local_score": 7,
+"last_star_ts": 1701451355,
+"name": "Matt Asplin"
+},
+"3207832": {
+"name": "ssaquetonpmic",
+"last_star_ts": 0,
+"local_score": 0,
+"completion_day_level": {},
+"id": 3207832,
+"global_score": 0,
+"stars": 0
+},
+"3212236": {
+"local_score": 21,
+"name": "Griffin Kubesa",
+"last_star_ts": 1701443556,
+"id": 3212236,
+"stars": 2,
+"global_score": 0,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 105760,
+"get_star_ts": 1701440583
+},
+"2": {
+"star_index": 117836,
+"get_star_ts": 1701443556
+}
+}
+}
+},
+"3217349": {
+"completion_day_level": {},
+"id": 3217349,
+"global_score": 0,
+"stars": 0,
+"name": "Cat Wilber",
+"last_star_ts": 0,
+"local_score": 0
+},
+"3224788": {
+"local_score": 11,
+"last_star_ts": 1701416514,
+"name": "sumapcf",
+"stars": 1,
+"global_score": 0,
+"id": 3224788,
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701416514,
+"star_index": 18852
+}
+}
+}
+},
+"3250993": {
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701442453,
+"star_index": 113392
+},
+"2": {
+"star_index": 149129,
+"get_star_ts": 1701451346
+}
+}
+},
+"id": 3250993,
+"global_score": 0,
+"stars": 2,
+"name": "Sasikumar Sakthivel",
+"last_star_ts": 1701451346,
+"local_score": 18
+},
+"3255551": {
+"stars": 2,
+"global_score": 0,
+"id": 3255551,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 0,
+"get_star_ts": 1701410177
+},
+"2": {
+"get_star_ts": 1701418403,
+"star_index": 25124
+}
+}
+},
+"local_score": 24,
+"last_star_ts": 1701418403,
+"name": "maddipati srinivas"
+},
+"3255574": {
+"completion_day_level": {},
+"global_score": 0,
+"stars": 0,
+"id": 3255574,
+"last_star_ts": 0,
+"name": "bhavana alluri",
+"local_score": 0
+},
+"3255582": {
+"completion_day_level": {},
+"id": 3255582,
+"global_score": 0,
+"stars": 0,
+"name": "Janarthanan Moorthy",
+"last_star_ts": 0,
+"local_score": 0
+},
+"3434412": {
+"completion_day_level": {},
+"id": 3434412,
+"stars": 0,
+"global_score": 0,
+"name": "bhavana alluri",
+"last_star_ts": 0,
+"local_score": 0
+}
+}
+}
