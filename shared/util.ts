@@ -33,6 +33,14 @@ export function deepClone(obj: any) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+export function isNumber(val: any) {
+	return typeof val === 'number';
+}
+
+export function isArray(array: any) {
+	return Array.isArray(array);
+}
+
 export type GridCoordinate = { row: number, col: number };
 
 export class Direction {
