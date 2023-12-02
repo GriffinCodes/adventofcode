@@ -1,15 +1,116 @@
-import { Direction, example, NEWLINE, readFile } from "../../shared/util";
+import {ansi, Color, Coordinate, Direction, example, NEWLINE, readFile} from "../../shared/util";
 
-type Coordinate = { row: number, col: number };
-type Sensor = { location: Coordinate, closestBeacon: Coordinate };
+let sensors: Set<Sensor> = new Set();
+
+class Sensor {
+	constructor(public location: Coordinate, public beacon: Coordinate) {}
+
+	distanceToBeacon() {
+		return this.distance(this.beacon);
+	}
+
+	distance(to: Coordinate): number {
+		return distanceBetween(this.location, to)
+	}
+
+	static isWithinReachOfAnySensor(location: Coordinate) {
+		for (let sensor of sensors) {
+			if (sensor.distance(location) <= sensor.distanceToBeacon()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	getAllCoordinatesJustOutOfReach(): Coordinate[] {
+		let coordinates: Coordinate[] = [];
+		let radius = this.distanceToBeacon() + 1;
+		let rowDifference = radius;
+		let colDifference = 0;
+
+		let add = (coordinate: Coordinate) => {
+			if (!Sensor.isWithinReachOfAnySensor(coordinate))
+				coordinates.push(coordinate);
+		}
+
+		while (rowDifference > 0) {
+			add(Coordinate.of(this.location.row + rowDifference--, this.location.col + colDifference++));
+		}
+		while (colDifference > 0) {
+			add(Coordinate.of(this.location.row + rowDifference--, this.location.col + colDifference--));
+		}
+		while (rowDifference < 0) {
+			add(Coordinate.of(this.location.row + rowDifference++, this.location.col + colDifference--));
+		}
+		while (colDifference < 0) {
+			add(Coordinate.of(this.location.row + rowDifference++, this.location.col + colDifference++));
+		}
+
+		return coordinates;
+	}
+}
+
+function distanceBetween(from: Coordinate, to: Coordinate): number {
+	return Math.abs(from.col - to.col) + Math.abs(from.row - to.row);
+}
+
+readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
+	let split = line.replace(/(Sensor at | closest beacon is at )/g, "").split(":")
+	sensors.add(new Sensor(Coordinate.of(
+		Number(split[0].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
+		Number(split[0].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
+	), Coordinate.of(
+		Number(split[1].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
+		Number(split[1].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
+	)));
+})
+
+
+let minRow = Math.min(...[...sensors].map(sensor => Math.min(sensor.location.row, sensor.beacon.row))) - (example() ? 15 : 1000000);
+let maxRow = Math.max(...[...sensors].map(sensor => Math.max(sensor.location.row, sensor.beacon.row))) + (example() ? 15 : 1000000);
+let minCol = Math.min(...[...sensors].map(sensor => Math.min(sensor.location.col, sensor.beacon.col))) - (example() ? 15 : 1000000);
+let maxCol = Math.max(...[...sensors].map(sensor => Math.max(sensor.location.col, sensor.beacon.col))) + (example() ? 15 : 1000000);
+
+let cannotBeBeacon = 0;
+for (let col = minCol; col < maxCol; col++) {
+	let row = example() ? 9 : 2000000;
+	let location: Coordinate = Coordinate.of(row, col);
+
+	for (let sensor of sensors) {
+		if (location.equals(sensor.location) || location.equals(sensor.beacon))
+			continue;
+
+		if (distanceBetween(location, sensor.location) <= sensor.distanceToBeacon()) {
+			++cannotBeBeacon;
+			break;
+		}
+	}
+}
+
+console.log(cannotBeBeacon);
+
+all: for (let sensor of sensors) {
+	let outOfReach = sensor.getAllCoordinatesJustOutOfReach();
+	search: for (let coordinate of outOfReach) {
+		for (let direction of Direction.cardinals()) {
+			if (!Sensor.isWithinReachOfAnySensor(coordinate.move(direction))) {
+				break search;
+			}
+		}
+		console.log(coordinate.col * 4000000 + coordinate.row)
+		break all;
+	}
+}
 
 class State {
-	static EMPTY = new State(".");
-	static SENSOR = new State("S");
-	static BEACON = new State("B");
-	static COVERED = new State("#");
+	static EMPTY = new State(ansi(Color.BLACK, "."));
+	static SENSOR = new State(ansi(Color.GREEN, "S"));
+	static BEACON = new State(ansi(Color.BLUE, "B"));
+	static COVERED = new State(ansi(Color.GRAY, "#"));
+	static OUT_OF_REACH = new State(ansi(Color.RED, "*"))
 
-	constructor(public character) {}
+	constructor(public character: string) {}
 }
 
 class Grid {
@@ -19,11 +120,11 @@ class Grid {
 	minRow: number;
 	maxRow: number;
 
-	constructor(public sensors: Sensor[]) {
-		this.minRow = Math.min(...sensors.map(sensor => Math.min(sensor.location.row, sensor.closestBeacon.row))) - 15;
-		this.maxRow = Math.max(...sensors.map(sensor => Math.max(sensor.location.row, sensor.closestBeacon.row))) + 15;
-		this.minCol = Math.min(...sensors.map(sensor => Math.min(sensor.location.col, sensor.closestBeacon.col))) - 15;
-		this.maxCol = Math.max(...sensors.map(sensor => Math.max(sensor.location.col, sensor.closestBeacon.col))) + 15;
+	constructor(public sensors: Set<Sensor>) {
+		this.minRow = Math.min(...[...sensors].map(sensor => Math.min(sensor.location.row, sensor.beacon.row))) - 15;
+		this.maxRow = Math.max(...[...sensors].map(sensor => Math.max(sensor.location.row, sensor.beacon.row))) + 15;
+		this.minCol = Math.min(...[...sensors].map(sensor => Math.min(sensor.location.col, sensor.beacon.col))) - 15;
+		this.maxCol = Math.max(...[...sensors].map(sensor => Math.max(sensor.location.col, sensor.beacon.col))) + 15;
 
 		this.fillGrid();
 		this.draw();
@@ -49,7 +150,7 @@ class Grid {
 	draw() {
 		this.sensors.forEach(sensor => {
 			this.setState(sensor.location, State.SENSOR)
-			this.setState(sensor.closestBeacon, State.BEACON)
+			this.setState(sensor.beacon, State.BEACON)
 		})
 	}
 
@@ -60,7 +161,7 @@ class Grid {
 	}
 
 	move(from: Coordinate, direction: Direction): Coordinate {
-		return { row: from.row + direction.vertical, col: from.col + direction.horizontal };
+		return Coordinate.of(from.row + direction.vertical, from.col + direction.horizontal);
 	}
 
 	stateAt(coordinate: Coordinate): State {
@@ -95,24 +196,18 @@ class Grid {
 					}
 				}
 			}
+
+			sensor.getAllCoordinatesJustOutOfReach().forEach(outOfReach => {
+				if (this.stateAt(outOfReach) == State.EMPTY) {
+					this.setState(outOfReach, State.OUT_OF_REACH)
+				}
+			})
 		})
 	}
 }
 
-let sensors = readFile(example() ? 'example' : 'input').split(NEWLINE).map(line => {
-	let split = line.replace(/(Sensor at | closest beacon is at )/g, "").split(":")
-	return <Sensor>{
-		location: {
-			row: Number(split[0].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
-			col: Number(split[0].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
-		},
-		closestBeacon: {
-			row: Number(split[1].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
-			col: Number(split[1].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
-		}
-	}
-})
-
-let cave = new Grid(sensors);
-cave.drawCoverage();
-cave.print();
+if (example()) {
+	let cave = new Grid(sensors);
+	cave.drawCoverage();
+	cave.print();
+}
