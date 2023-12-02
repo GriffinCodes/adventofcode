@@ -1,6 +1,6 @@
-import { ALPHABET, ansi, avg, Color, deepClone, Direction, getPathSymbol, GridCoordinate, NEWLINE, readFile, example } from "../../shared/util";
+import { ALPHABET, ansi, avg, Color, deepClone, Direction, getPathSymbol, Coordinate, NEWLINE, readFile, example } from "../../shared/util";
 
-type Step = { coordinate: GridCoordinate, direction: Direction };
+type Step = { coordinate: Coordinate, direction: Direction };
 type Path = {
 	steps: Step[]
 	timesVisitedLetter: { letter: { count: number } }[]
@@ -8,7 +8,7 @@ type Path = {
 
 let grid: string[][] = [];
 let emptyGrid: string[][] = [];
-let starting: GridCoordinate, ending: GridCoordinate;
+let starting: Coordinate, ending: Coordinate;
 readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 	if (line.includes("S")) {
 		starting = {row: grid.length, col: line.indexOf("S")}
@@ -33,18 +33,18 @@ function computeTimesVisitedOnBestPath() {
 	})
 }
 
-function letterAt(coordinate: GridCoordinate) {
+function letterAt(coordinate: Coordinate) {
 	return grid[coordinate.row][coordinate.col];
 }
 
-function elevationAt(coordinate: GridCoordinate) {
+function elevationAt(coordinate: Coordinate) {
 	let letter = letterAt(coordinate);
 	if (letter == 'S') return -1;
 	if (letter == 'E') letter = 'z';
 	return ALPHABET.indexOf(letter);
 }
 
-function printPath(message: string, current: GridCoordinate, path: Path) {
+function printPath(message: string, current: Coordinate, path: Path) {
 	let gridCopy = deepClone(grid);
 	let lastStep: Step = {coordinate: undefined, direction: Direction.R};
 	path.steps.forEach(step => {
@@ -57,13 +57,13 @@ function printPath(message: string, current: GridCoordinate, path: Path) {
 	gridCopy.forEach(row => console.log(row.join("")));
 }
 
-function distanceSquaredToEnd(current: GridCoordinate) {
+function distanceSquaredToEnd(current: Coordinate) {
 	let a = current.row - ending.row;
 	let b = current.col - ending.col;
 	return a * a + b * b;
 }
 
-function hasVisited(path: { coordinate: GridCoordinate; direction: Direction }[], c: string) {
+function hasVisited(path: { coordinate: Coordinate; direction: Direction }[], c: string) {
 	return path.find(step => letterAt(step.coordinate) == c);
 }
 
@@ -80,7 +80,7 @@ function debug(...message: any) {
 	// console.log(...message);
 }
 
-function canMoveTo(from: GridCoordinate, direction: Direction, to: GridCoordinate, path: Path) {
+function canMoveTo(from: Coordinate, direction: Direction, to: Coordinate, path: Path) {
 	let neighborCoordinate = grid[to.row]?.[to.col];
 	if (!neighborCoordinate) {
 		debug("Outside of grid", to);
@@ -124,7 +124,7 @@ function canMoveTo(from: GridCoordinate, direction: Direction, to: GridCoordinat
 	return true;
 }
 
-function exploreNeighbors(current: GridCoordinate, path: Path, breakCondition: () => boolean) {
+function exploreNeighbors(current: Coordinate, path: Path, breakCondition: () => boolean) {
 	if (breakCondition()) {
 		return;
 	}
@@ -154,9 +154,9 @@ function exploreNeighbors(current: GridCoordinate, path: Path, breakCondition: (
 		timer = now;
 	}
 
-	let directions: {direction: Direction, neighbor: GridCoordinate, indexOnBestPath: number, distance: number}[] = [];
+	let directions: {direction: Direction, neighbor: Coordinate, indexOnBestPath: number, distance: number}[] = [];
 	for (let direction of Direction.cardinals()) {
-		let neighbor: GridCoordinate = {row: current.row + direction.vertical, col: current.col + direction.horizontal}
+		let neighbor: Coordinate = {row: current.row + direction.vertical, col: current.col + direction.horizontal}
 		let neighborsIndexOnBestPath = bestPath.steps.reverse().indexOf(bestPath.steps.find(step => step.coordinate.row == neighbor.row && step.coordinate.col == neighbor.col))
 		directions.push({direction: direction, neighbor: neighbor, indexOnBestPath: neighborsIndexOnBestPath, distance: distanceSquaredToEnd(neighbor)});
 	}

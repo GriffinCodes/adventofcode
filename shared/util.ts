@@ -1,8 +1,6 @@
-import exp = require("constants");
-
 const fs = require('fs');
 
-export function example() {
+export function example(): boolean {
 	return process.argv.includes("-e") || process.argv.includes("--example");
 }
 
@@ -10,11 +8,18 @@ export const NEWLINE = /\r?\n/;
 export const DOUBLE_NEWLINE = /\r?\n\r?\n/;
 export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
+// https://talyian.github.io/ansicolors/
 export class Color {
 	static RESET = "\u001B[0m";
-	static RED = "\u001B[31m";
-	static GREEN = "\u001B[32m";
-	static YELLOW = "\u001B[33m";
+	static BLACK = "\u001B[30m"
+	static RED = "\u001B[31m"
+	static GREEN = "\u001B[32m"
+	static YELLOW = "\u001B[33m"
+	static BLUE = "\u001B[34m"
+	static MAGENTA = "\u001B[35m"
+	static CYAN = "\u001B[36m"
+	static WHITE = "\u001B[37m"
+	static GRAY = "\x1b[38;5;236m"
 }
 
 export function ansi(color: string, text: string) {
@@ -44,8 +49,6 @@ export function isNumber(val: any) {
 export function isArray(array: any) {
 	return Array.isArray(array);
 }
-
-export type GridCoordinate = { row: number, col: number };
 
 export class Direction {
 	static R = new Direction("R", "L", "→", 0, 1);
@@ -87,6 +90,31 @@ export let pathSymbols: {last: Direction, current: Direction, symbol: string}[] 
 	{last: Direction.R, current: Direction.D, symbol: "┐"},
 	{last: Direction.U, current: Direction.L, symbol: "┐"}
 ]
+
+export class Coordinate {
+	static instances: Map<number, Map<number, Coordinate>> = new Map();
+
+	private constructor(public row: number, public col: number) {}
+
+	static of(row: number, col: number): Coordinate {
+		if (!this.instances.has(row))
+			this.instances.set(row, new Map());
+
+		let rows: any = this.instances.get(row);
+		if (!rows.has(col))
+			rows.set(col, new Coordinate(row, col));
+
+		return rows.get(col);
+	}
+
+	move(direction: Direction): Coordinate {
+		return Coordinate.of(this.row + direction.vertical, this.col + direction.horizontal);
+	}
+
+	equals(other: Coordinate) {
+		return this.row == other.row && this.col == other.col;
+	}
+}
 
 export function getPathSymbol(last: Direction, current: Direction): string {
 	return pathSymbols.find(symbol => symbol.last == last && symbol.current == current).symbol;
