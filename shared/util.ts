@@ -34,6 +34,10 @@ export function sum(numbers: number[]) {
 	return numbers.reduce((acc, cur) => acc + cur, 0);
 }
 
+export function product(numbers: number[]) {
+	return numbers.reduce((acc, cur) => acc * cur, 1);
+}
+
 export function avg(numbers: number[]) {
 	return numbers.reduce((a, b) => a + b) / numbers.length;
 }
