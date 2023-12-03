@@ -98,8 +98,12 @@ export class Direction {
 		return Direction[this.oppositeName];
 	}
 
+	static values(): Direction[] {
+		return Object.keys(Direction).map(direction => Direction[direction]);
+	}
+
 	static cardinals(): Direction[] {
-		return Object.keys(Direction).map(direction => Direction[direction]).filter(direction => direction.vertical == 0 || direction.horizontal == 0);
+		return Direction.values().filter(direction => direction.vertical == 0 || direction.horizontal == 0);
 	}
 }
 
@@ -207,15 +211,30 @@ export class Iterator {
 		}
 	}
 
+	previous() {
+		if (this.index - 1 >= 0)
+			return this.iterable[this.keys[this.index - 1]];
+		return null;
+	}
+
 	next() {
 		if (this.index < this.keys.length)
 			return this.iterable[this.keys[this.index++]];
-		else
-			return null;
+		return null;
+	}
+
+	peek() {
+		if (this.index < this.keys.length)
+			return this.iterable[this.keys[this.index]];
+		return null;
 	}
 
 	hasNext() {
 		return this.index < this.keys.length;
+	}
+
+	length() {
+		return this.keys.length;
 	}
 }
 
