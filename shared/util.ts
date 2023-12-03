@@ -34,7 +34,7 @@ declare global {
 	interface Array<T> {
 		sum(): number;
 		product(): number;
-		distinct(): number[];
+		distinct(): T[];
 		min(): number;
 		max(): number;
 		average(): number;
@@ -152,6 +152,17 @@ export class Coordinate {
 	}
 }
 
+export class BoundingBox {
+	constructor(public min: Coordinate, public max: Coordinate) {}
+
+	includes(coordinate: Coordinate) {
+		return  coordinate.col >= this.min.col &&
+				coordinate.col <= this.max.col &&
+				coordinate.row >= this.min.row &&
+				coordinate.row <= this.max.row;
+	}
+}
+
 export function getPathSymbol(last: Direction, current: Direction): string {
 	return pathSymbols.find(symbol => symbol.last == last && symbol.current == current).symbol;
 }
@@ -195,8 +206,8 @@ export function shuffle(array) {
 }
 
 export class Iterator {
-	index = 0;
-	keys = [];
+	private i = 0;
+	private keys = [];
 
 	constructor(private iterable) {
 		if (!iterable || typeof iterable != "object")
@@ -212,25 +223,29 @@ export class Iterator {
 	}
 
 	previous() {
-		if (this.index - 1 >= 0)
-			return this.iterable[this.keys[this.index - 1]];
+		if (this.index() - 1 >= 0)
+			return this.iterable[this.keys[this.index() - 1]];
 		return null;
 	}
 
 	next() {
-		if (this.index < this.keys.length)
-			return this.iterable[this.keys[this.index++]];
+		if (this.index() < this.keys.length)
+			return this.iterable[this.keys[this.i++]];
 		return null;
 	}
 
 	peek() {
-		if (this.index < this.keys.length)
-			return this.iterable[this.keys[this.index]];
+		if (this.index() < this.keys.length)
+			return this.iterable[this.keys[this.index()]];
 		return null;
 	}
 
 	hasNext() {
-		return this.index < this.keys.length;
+		return this.index() < this.keys.length;
+	}
+
+	index() {
+		return this.i;
 	}
 
 	length() {
