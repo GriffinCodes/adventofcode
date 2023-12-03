@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 export function example(): boolean {
 	return process.argv.includes("-e") || process.argv.includes("--example");
@@ -30,16 +30,44 @@ export function readFile(filename: string): string {
 	return fs.readFileSync(filename, 'utf8');
 }
 
-export function sum(numbers: number[]) {
-	return numbers.reduce((acc, cur) => acc + cur, 0);
+declare global {
+	interface Array<T> {
+		sum(): number;
+		product(): number;
+		distinct(): number[];
+		min(): number;
+		max(): number;
+		average(): number;
+		iterator(): Iterator;
+	}
 }
 
-export function product(numbers: number[]) {
-	return numbers.reduce((acc, cur) => acc * cur, 1);
+Array.prototype.sum = function(): number {
+	return this.reduce((a, b) => a + b, 0);
 }
 
-export function avg(numbers: number[]) {
-	return numbers.reduce((a, b) => a + b) / numbers.length;
+Array.prototype.product = function(): number {
+	return this.length === 0 ? 0 : this.reduce((a, b) => a * b, 1);
+}
+
+Array.prototype.distinct = function(): number[] {
+	return Array.from(new Set(this));
+}
+
+Array.prototype.min = function(): number {
+	return Math.min(...this);
+}
+
+Array.prototype.max = function(): number {
+	return Math.max(...this);
+}
+
+Array.prototype.average = function(): number {
+	return this.sum() / this.length;
+}
+
+Array.prototype.iterator = function(): Iterator {
+	return new Iterator(this);
 }
 
 export function deepClone(obj: any) {
@@ -183,7 +211,7 @@ export class Iterator {
 		if (this.index < this.keys.length)
 			return this.iterable[this.keys[this.index++]];
 		else
-			throw { name: "StopIteration" };
+			return null;
 	}
 
 	hasNext() {

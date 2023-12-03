@@ -1,4 +1,4 @@
-import { NEWLINE, readFile, sum, example } from "../../shared/util";
+import {example, NEWLINE, readFile} from "../../shared/util";
 
 function parseLine(line: string) {
 	let firstAndLast = line
@@ -7,9 +7,9 @@ function parseLine(line: string) {
 	return Number(firstAndLast + (firstAndLast.length == 1 ? firstAndLast : ""));
 }
 
-console.log(sum(readFile(example() ? 'example' : 'input')
-		.split(NEWLINE)
-		.map(line => parseLine(line))));
+console.log(readFile(example() ? 'example' : 'input')
+	.split(NEWLINE)
+	.map(line => parseLine(line)).sum());
 
 let spelledOut = {
 	"one": 1,
@@ -26,19 +26,19 @@ let spelledOut = {
 let digits = "(\\d|" + Object.keys(spelledOut).join("|") + ")";
 let regex: RegExp = new RegExp("(?=" + digits + ").*" + digits + "", "g");
 
-console.log(sum(readFile(example() ? 'example2' : 'input')
-		.split(NEWLINE)
-		.map(line => {
-			let numbers = [];
-			let matcher;
-			while ((matcher = regex.exec(line)) !== null) {
-				for (let i = 1; i <= 2; i++) {
-					let match = matcher[i];
-					for (let key of Object.keys(spelledOut)) {
-						match = match.replace(key, spelledOut[key])
-					}
-					numbers.push(match);
+console.log(readFile(example() ? 'example2' : 'input')
+	.split(NEWLINE)
+	.map(line => {
+		let numbers = [];
+		let matcher;
+		while ((matcher = regex.exec(line)) !== null) {
+			for (let i = 1; i <= 2; i++) {
+				let match = matcher[i];
+				for (let key of Object.keys(spelledOut)) {
+					match = match.replace(key, spelledOut[key])
 				}
+				numbers.push(match);
 			}
-			return parseLine(numbers.join(""));
-		})));
+		}
+		return parseLine(numbers.join(""));
+	}).sum());

@@ -1,4 +1,4 @@
-import { NEWLINE, readFile, sum } from "../../shared/util";
+import {NEWLINE, readFile} from "../../shared/util";
 
 let config = {
 	'a': 'rock',
@@ -44,7 +44,7 @@ data.split(NEWLINE).forEach(game => {
 	let result = play(config[split[0]], config[split[1]]);
 	games.push(result);
 });
-console.log(sum(games));
+console.log(games.sum());
 
 let games2: number[] = [];
 data.split(NEWLINE).forEach(game => {
@@ -53,4 +53,4 @@ data.split(NEWLINE).forEach(game => {
 	let result = play(opponent, configPart2[split[1]](opponent));
 	games2.push(result);
 })
-console.log(sum(games2));
+console.log(games2.sum());

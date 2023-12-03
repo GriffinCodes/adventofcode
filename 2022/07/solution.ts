@@ -1,4 +1,4 @@
-import { NEWLINE, readFile, sum } from "../../shared/util";
+import {NEWLINE, readFile} from "../../shared/util";
 
 class Folder {
 	public files: File[] = [];
@@ -24,7 +24,7 @@ class Folder {
 	}
 
 	getTotalSize = () => {
-		return sum(this.folders.map(folder => folder.getTotalSize())) + sum(this.files.map(file => file.size));
+		return this.folders.map(folder => folder.getTotalSize()).sum() + this.files.map(file => file.size).sum();
 	}
 
 	stringify() {
@@ -84,7 +84,7 @@ inspect(root);
 
 console.log(map);
 
-console.log(sum(Array.from(map.values()).filter((value) => value <= 100_000)));
+console.log(Array.from(map.values()).filter((value) => value <= 100_000).sum());
 
 let availSpace = 70_000_000 - root.getTotalSize();
 let spaceNeeded = 30_000_000 - availSpace;

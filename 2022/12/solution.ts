@@ -1,4 +1,4 @@
-import { ALPHABET, ansi, avg, Color, deepClone, Direction, getPathSymbol, Coordinate, NEWLINE, readFile, example } from "../../shared/util";
+import { ALPHABET, ansi, Color, deepClone, Direction, getPathSymbol, Coordinate, NEWLINE, readFile, example } from "../../shared/util";
 
 type Step = { coordinate: Coordinate, direction: Direction };
 type Path = {
@@ -11,10 +11,10 @@ let emptyGrid: string[][] = [];
 let starting: Coordinate, ending: Coordinate;
 readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 	if (line.includes("S")) {
-		starting = {row: grid.length, col: line.indexOf("S")}
+		starting = Coordinate.of(grid.length, line.indexOf("S"))
 	}
 	if (line.includes("E")) {
-		ending = {row: grid.length, col: line.indexOf("E")}
+		ending = Coordinate.of(grid.length, line.indexOf("E"))
 	}
 	grid.push(line.split(""));
 	emptyGrid.push(".".repeat(line.split("").length).split(""))
@@ -156,7 +156,7 @@ function exploreNeighbors(current: Coordinate, path: Path, breakCondition: () =>
 
 	let directions: {direction: Direction, neighbor: Coordinate, indexOnBestPath: number, distance: number}[] = [];
 	for (let direction of Direction.cardinals()) {
-		let neighbor: Coordinate = {row: current.row + direction.vertical, col: current.col + direction.horizontal}
+		let neighbor: Coordinate = Coordinate.of(current.row + direction.vertical, current.col + direction.horizontal)
 		let neighborsIndexOnBestPath = bestPath.steps.reverse().indexOf(bestPath.steps.find(step => step.coordinate.row == neighbor.row && step.coordinate.col == neighbor.col))
 		directions.push({direction: direction, neighbor: neighbor, indexOnBestPath: neighborsIndexOnBestPath, distance: distanceSquaredToEnd(neighbor)});
 	}

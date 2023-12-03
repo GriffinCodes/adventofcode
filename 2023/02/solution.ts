@@ -1,4 +1,4 @@
-import {example, NEWLINE, product, readFile, sum} from "../../shared/util";
+import {example, NEWLINE, readFile} from "../../shared/util";
 
 type Color = "red" | "green" | "blue";
 type MAXES = { [key in Color]: number; }
@@ -24,5 +24,5 @@ readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 					game.colors[color] = Math.max(Number(count.replace(/\D/g, "")), game.colors[color] || 0);
 })
 
-console.log(sum(games.filter(game => colors().every(color => game.colors[color] <= maxes[color])).map(game => game.id)));
-console.log(sum(games.map(game => product(colors().map(color => game.colors[color])))));
+console.log(games.filter(game => colors().every(color => game.colors[color] <= maxes[color])).map(game => game.id).sum());
+console.log(games.map(game => colors().map(color => game.colors[color]).product()).sum());

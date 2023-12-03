@@ -1,4 +1,4 @@
-import { DOUBLE_NEWLINE, isArray, isNumber, NEWLINE, readFile, sum, example } from "../../shared/util";
+import {DOUBLE_NEWLINE, example, isArray, isNumber, NEWLINE, readFile} from "../../shared/util";
 
 type MixedType = [number | number[] | [number[]]]
 class Pair {
@@ -75,7 +75,7 @@ pairs.forEach(pair => {
     }
 });
 
-console.log(sum(pairs.filter(pair => pair.correctOrder).map(pair => pair.index)))
+console.log(pairs.filter(pair => pair.correctOrder).map(pair => pair.index).sum())
 
 let all: MixedType[] = [];
 pairs.forEach(pair => {
