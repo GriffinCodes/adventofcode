@@ -7,8 +7,8 @@ let oxygenNumbers: string[] = [...lines];
 let co2Numbers: string[] = [...lines];
 
 function getCommonality(lines: string[], index: number) {
-	let zeros = lines.filter(line => line.charAt(index) == '0').length;
-	let ones = lines.filter(line => line.charAt(index) == '1').length;
+	let zeros = lines.count(line => line.charAt(index) == '0')
+	let ones = lines.count(line => line.charAt(index) == '1')
 	return {
 		mostCommon: zeros > ones ? '0' : '1',
 		leastCommon: zeros <= ones ? '0' : '1'

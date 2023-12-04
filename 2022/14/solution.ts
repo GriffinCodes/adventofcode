@@ -142,7 +142,7 @@ class Grid {
     }
 
     countSand(): number {
-        return this.grid.flat().filter(state => state == State.SAND).length;
+        return this.grid.flat().count(state => state == State.SAND);
     }
 }
 

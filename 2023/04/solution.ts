@@ -6,7 +6,7 @@ class Card {
 	public copies: number = 1;
 
 	constructor(public winningNumbers: number[], public myNumbers: number[]) {
-		this.matchingNumbers = this.myNumbers.filter(myNumber => this.winningNumbers.includes(myNumber)).length;
+		this.matchingNumbers = this.myNumbers.count(myNumber => this.winningNumbers.includes(myNumber));
 		this.value = this.matchingNumbers == 0 ? 0 : Math.pow(2, this.matchingNumbers - 1);
 	}
 }

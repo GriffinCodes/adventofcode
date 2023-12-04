@@ -29,7 +29,7 @@ let timesVisitedOnBestPath: { letter: { count: number } }[] = [];
 
 function computeTimesVisitedOnBestPath() {
 	ALPHABET.split("").forEach(letter => {
-		timesVisitedOnBestPath[letter] = { count: bestPath.steps.filter(step => letterAt(step.coordinate) == letter).length };
+		timesVisitedOnBestPath[letter] = { count: bestPath.steps.count(step => letterAt(step.coordinate) == letter) };
 	})
 }
 

@@ -32,6 +32,7 @@ export function readFile(filename: string): string {
 
 declare global {
 	interface Array<T> {
+		count(predicate: (value: T) => boolean): number;
 		sum(): number;
 		product(): number;
 		distinct(): T[];
@@ -45,6 +46,10 @@ declare global {
 		binaryToDecimal(): number;
 		asNumberArray(splitter: string | RegExp): number[];
 	}
+}
+
+Array.prototype.count = function(predicate: (value: any) => boolean): number {
+	return this.filter(predicate).length;
 }
 
 Array.prototype.sum = function(): number {
