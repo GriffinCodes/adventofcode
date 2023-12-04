@@ -40,6 +40,10 @@ declare global {
 		average(): number;
 		iterator(): Iterator;
 	}
+
+	interface String {
+		binaryToDecimal(): number;
+	}
 }
 
 Array.prototype.sum = function(): number {
@@ -68,6 +72,10 @@ Array.prototype.average = function(): number {
 
 Array.prototype.iterator = function(): Iterator {
 	return new Iterator(this);
+}
+
+String.prototype.binaryToDecimal = function(): number {
+	return parseInt(this, 2);
 }
 
 export function deepClone(obj: any) {
