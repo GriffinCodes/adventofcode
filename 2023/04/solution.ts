@@ -21,8 +21,9 @@ readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 });
 
 cards.forEach((card, index) => {
-	for (let next = index + 1; next <= index + card.matchingNumbers; next++)
-		cards[next].copies += card.copies;
+	cards.slice(index + 1, index + card.matchingNumbers + 1).forEach(next => {
+		next.copies += card.copies;
+	});
 });
 
 console.log(cards.map(card => card.value).sum());
