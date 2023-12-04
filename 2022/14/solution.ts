@@ -1,11 +1,11 @@
-import { Direction, Iterator, NEWLINE, readFile, example } from "../../shared/util";
+import { Direction, NEWLINE, readFile, example } from "../../shared/util";
 
 type Coordinate = { row: number, col: number };
 type Line = {from: Coordinate, to: Coordinate}
 let lines: Line[] = [];
 
 readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
-    let iterator = new Iterator(line.split(" -> "))
+    let iterator = line.split(" -> ").iterator();
     let from = iterator.next();
     while (iterator.hasNext()) {
         let to = iterator.next();

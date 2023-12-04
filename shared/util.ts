@@ -43,6 +43,7 @@ declare global {
 
 	interface String {
 		binaryToDecimal(): number;
+		asNumberArray(splitter: string | RegExp): number[];
 	}
 }
 
@@ -76,6 +77,10 @@ Array.prototype.iterator = function(): Iterator {
 
 String.prototype.binaryToDecimal = function(): number {
 	return parseInt(this, 2);
+}
+
+String.prototype.asNumberArray = function(splitter: string | RegExp): number[] {
+	return this.split(splitter).map(number => Number(number));
 }
 
 export function deepClone(obj: any) {

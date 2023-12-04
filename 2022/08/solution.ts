@@ -1,10 +1,8 @@
-import { NEWLINE, readFile, example } from "../../shared/util";
+import { example, NEWLINE, readFile } from "../../shared/util";
 
-let forest: number[][] = [];
-readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
-	let items = line.split("").map(number => Number(number));
-	forest.push(items);
-});
+let forest: number[][] = readFile(example() ? 'example' : 'input')
+		.split(NEWLINE)
+		.map(line => line.asNumberArray(""));
 
 let outerTrees = ((forest[0].length - 1) * 2) + ((forest.length - 1) * 2);
 

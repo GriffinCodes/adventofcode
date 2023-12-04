@@ -1,4 +1,4 @@
-import {ansi, Color, Coordinate, Direction, example, NEWLINE, readFile} from "../../shared/util";
+import { ansi, Color, Coordinate, Direction, example, NEWLINE, readFile } from "../../shared/util";
 
 let sensors: Set<Sensor> = new Set();
 
@@ -25,8 +25,7 @@ class Sensor {
 
 	getAllCoordinatesJustOutOfReach(): Coordinate[] {
 		let coordinates: Coordinate[] = [];
-		let radius = this.distanceToBeacon() + 1;
-		let rowDifference = radius;
+		let rowDifference = this.distanceToBeacon() + 1;
 		let colDifference = 0;
 
 		let add = (coordinate: Coordinate) => {
@@ -56,14 +55,14 @@ function distanceBetween(from: Coordinate, to: Coordinate): number {
 }
 
 readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
-	let split = line.replace(/(Sensor at | closest beacon is at )/g, "").split(":")
-	sensors.add(new Sensor(Coordinate.of(
-		Number(split[0].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
-		Number(split[0].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
-	), Coordinate.of(
-		Number(split[1].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
-		Number(split[1].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
-	)));
+	for (let matcher of line.matchAll(/Sensor at (.*): closest beacon is at (.*)/g))
+		sensors.add(new Sensor(Coordinate.of(
+			Number(matcher[1].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
+			Number(matcher[1].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
+		), Coordinate.of(
+			Number(matcher[2].replace(/x=(-?\d+), y=(-?\d+)/, "$2")),
+			Number(matcher[2].replace(/x=(-?\d+), y=(-?\d+)/, "$1"))
+		)));
 })
 
 

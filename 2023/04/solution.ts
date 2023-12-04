@@ -15,8 +15,8 @@ let cards: Card[] = [];
 readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 	for (let matcher of line.matchAll(/Card\s+\d+:\s+(.*)\s+\|\s+(.*)/g))
 		cards.push(new Card(
-			matcher[1].split(/\s+/).map(num => Number(num)),
-			matcher[2].split(/\s+/).map(num => Number(num))
+			matcher[1].asNumberArray(/\s+/),
+			matcher[2].asNumberArray(/\s+/)
 		));
 });
 
