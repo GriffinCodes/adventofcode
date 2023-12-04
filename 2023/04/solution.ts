@@ -15,11 +15,11 @@ class Card {
 
 let cards: Card[] = [];
 readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
-	for (let matcher of line.matchAll(/Card\s+(\d+): (.*) \| (.*)/g))
+	for (let matcher of line.matchAll(/Card\s+(\d+):\s+(.*)\s+\|\s+(.*)/g))
 		cards.push(new Card(
 			matcher[1],
-			matcher[2].split(" ").map(num => Number(num)).filter(num => num != 0),
-			matcher[3].split(" ").map(num => Number(num)).filter(num => num != 0)
+			matcher[2].split(/\s+/).map(num => Number(num)),
+			matcher[3].split(/\s+/).map(num => Number(num))
 		));
 });
 
