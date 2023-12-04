@@ -33,6 +33,7 @@ export function readFile(filename: string): string {
 declare global {
 	interface Array<T> {
 		count(predicate: (value: T) => boolean): number;
+		none(predicate: (value: T) => boolean): boolean;
 		sum(): number;
 		product(): number;
 		distinct(): T[];
@@ -50,6 +51,10 @@ declare global {
 
 Array.prototype.count = function(predicate: (value: any) => boolean): number {
 	return this.filter(predicate).length;
+}
+
+Array.prototype.none = function(predicate: (value: any) => boolean): boolean {
+	return !this.every(predicate);
 }
 
 Array.prototype.sum = function(): number {
