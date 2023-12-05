@@ -1,99 +1,75 @@
-import {DOUBLE_NEWLINE, example, NEWLINE, readFile} from "../../shared/util";
+import { DOUBLE_NEWLINE, example, NEWLINE, NumberRange, readFile } from "../../shared/util";
 
-class Range {
+class Conversion {
 	constructor(
 		public destinationRangeStart: number,
 		public sourceRangeStart: number,
 		public rangeLength: number
 	) {}
 
-	contains(source: number) {
+	containsSource(source: number) {
 		return this.sourceRangeStart <= source && this.sourceRangeStart + this.rangeLength >= source;
 	}
 
 	containsDestination(destination: number) {
-		let diff = this.destinationRangeStart - this.sourceRangeStart;
-		let destStart = this.sourceRangeStart + diff;
-		return destStart <= destination && destStart + this.rangeLength > destination;
+		return this.destinationRangeStart <= destination && this.destinationRangeStart + this.rangeLength > destination;
 	}
 
-	convert(source: number) {
-		return this.destinationRangeStart + (source - this.sourceRangeStart)
+	forwards(source: number) {
+		return this.destinationRangeStart + source - this.sourceRangeStart;
 	}
 
 	backwards(destination: number) {
 		return destination - this.destinationRangeStart + this.sourceRangeStart;
 	}
 }
-class ConversionMap {
-	constructor(
-		public from: string,
-		public to: string,
-		public ranges: Range[]
-	) {}
 
-	convert(source: number): number {
-		return this.ranges.find(range => range.contains(source))?.convert(source) ?? source;
+class ConversionMap {
+	constructor(public conversions: Conversion[]) {}
+
+	forwards(source: number): number {
+		return this.conversions.find(conversion => conversion.containsSource(source))?.forwards(source) ?? source;
 	}
 
 	backwards(destination: number): number {
-		return this.ranges.find(range => range.containsDestination(destination))?.backwards(destination) ?? destination;
+		return this.conversions.find(conversion => conversion.containsDestination(destination))?.backwards(destination) ?? destination;
 	}
 }
-let input = readFile(example() ? 'example' : 'input').split(DOUBLE_NEWLINE);
-let seeds: number[] = input.shift().split(": ")[1].asNumberArray(" ");
-let maps: ConversionMap[] = [];
 
-input.forEach(group => {
-	let from: string;
-	let to: string;
-	let ranges: Range[] = [];
-	group.split(NEWLINE).forEach(line => {
-		for (let matcher of line.matchAll(/(\w+)-to-(\w+) map:/g)) {
-			from = matcher[1];
-			to = matcher[2];
-		}
-		for (let matcher of line.matchAll(/(\d+) (\d+) (\d+)/g)) {
-			ranges.push(new Range(Number(matcher[1]), Number(matcher[2]), Number(matcher[3])))
-		}
-	});
-	maps.push(new ConversionMap(from, to, ranges))
-});
-
-function convertForwards(seed: number) {
+function forwards(seed: number) {
 	for (let map of maps)
-		seed = map.convert(seed);
+		seed = map.forwards(seed);
 	return seed;
 }
 
-function convertBackwards(seed: number) {
-	for (let map of [...maps].reverse())
+function backwards(seed: number) {
+	for (let map of reversed)
 		seed = map.backwards(seed);
 	return seed;
 }
 
-console.log(seeds.map(seed => convertForwards(seed)).min());
+let groups = readFile(example() ? 'example' : 'input').split(DOUBLE_NEWLINE);
 
-class NumberRange {
-	constructor(public start: number, public range: number) {}
+let seeds: number[] = groups.shift().split(": ")[1].asNumberArray(" ");
+let seedRanges: NumberRange[] = seeds.chunk(2).map(chunk => new NumberRange(chunk[0], chunk[1]));
 
-	contains(number: number) {
-		return this.start <= number && this.start + this.range >= number;
-	}
-}
+let maps: ConversionMap[] = groups.map(group => {
+	let conversions: Conversion[] = [];
+	group.split(NEWLINE).forEach(line => {
+		for (let matcher of line.matchAll(/(\d+) (\d+) (\d+)/g))
+			conversions.push(new Conversion(Number(matcher[1]), Number(matcher[2]), Number(matcher[3])))
+	});
+	return new ConversionMap(conversions);
+});
+let reversed = maps.slice(0).reverse();
 
-let seedRanges: NumberRange[] = [];
-let iterator = seeds.iterator();
-while (iterator.hasNext()) {
-	seedRanges.push(new NumberRange(Number(iterator.next()), Number(iterator.next())));
-}
+console.log(seeds.map(seed => forwards(seed)).min());
 
-let result = 0;
+let location = -1;
 while (true) {
-	let backwards = convertBackwards(result);
-	if (seedRanges.some(seedRange => seedRange.contains(backwards))) {
-		console.log(result);
+	let seed = backwards(++location);
+	if (seedRanges.some(seedRange => seedRange.contains(seed))) {
+		console.log(location);
 		break;
 	}
-	result++;
 }

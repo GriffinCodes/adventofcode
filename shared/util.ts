@@ -15,6 +15,7 @@ declare global {
 		max(): number;
 		average(): number;
 		iterator(): Iterator;
+		chunk(size: number): T[];
 		distinct(): T[];
 		shuffle(): T[];
 	}
@@ -69,6 +70,13 @@ Array.prototype.average = function(): number {
 
 Array.prototype.iterator = function(): Iterator {
 	return new Iterator(this);
+}
+
+Array.prototype.chunk = function(size: number): any[][] {
+	let chunked = [];
+	for (let i = 0; i < this.length; i += size)
+		chunked.push(this.slice(i, i + size));
+	return chunked;
 }
 
 // https://stackoverflow.com/a/2450976
@@ -219,10 +227,26 @@ export class BoundingBox {
 	constructor(public min: Coordinate, public max: Coordinate) {}
 
 	includes(coordinate: Coordinate) {
-		return  coordinate.col >= this.min.col &&
+		return coordinate.col >= this.min.col &&
 				coordinate.col <= this.max.col &&
 				coordinate.row >= this.min.row &&
 				coordinate.row <= this.max.row;
+	}
+}
+
+export class NumberRange {
+	public start: number;
+	public range: number;
+	public end: number;
+
+	constructor(start: number | string, range: number | string) {
+		this.start = Number(start);
+		this.range = Number(range);
+		this.end = this.start + this.range;
+	}
+
+	contains(number: number) {
+		return this.start <= number && this.end >= number;
 	}
 }
 
