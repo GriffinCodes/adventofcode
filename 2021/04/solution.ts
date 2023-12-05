@@ -1,17 +1,21 @@
 import { ansi, Color, DOUBLE_NEWLINE, example, NEWLINE, readFile } from "../../shared/util";
 
-class State {
+class BoardNumber {
 	picked: boolean;
 
 	constructor(public number: number) {}
+
+	print(): string {
+		return ansi(this.picked ? Color.GREEN : Color.RESET, String(this.number).padStart(2));
+	}
 }
 
 class Board {
-	grid: State[][] = [];
+	grid: BoardNumber[][] = [];
 
 	constructor(public lines: string[]) {
 		for (let line of lines)
-			this.grid.push(line.trim().asNumberArray(/\s+/).map(number => new State(number)));
+			this.grid.push(line.trim().asNumberArray(/\s+/).map(number => new BoardNumber(number)));
 	}
 
 	draw(draw: number): boolean {
@@ -35,23 +39,18 @@ class Board {
 		return false;
 	}
 
-	pivot(): State[][] {
-		let pivoted: State[][] = [];
+	pivot(): BoardNumber[][] {
+		let pivoted: BoardNumber[][] = [];
 		this.grid.forEach(line => {
-			for (let i = 0; i < line.length; i++) {
-				if (!pivoted[i])
-					pivoted[i] = [];
-				pivoted[i].push(line[i]);
-			}
+			for (let i = 0; i < line.length; i++)
+				(pivoted[i] ||= []).push(line[i]);
 		});
 		return pivoted;
 	}
 
-	print(grid: State[][]) {
+	print(grid: BoardNumber[][]) {
 		console.log()
-		grid.forEach(row => {
-			console.log(row.map(state => ansi(state.picked ? Color.GREEN : Color.RESET, String(state.number).padStart(2))).join(" "));
-		})
+		grid.forEach(row => console.log(row.map(number => number.print()).join(" ")))
 	}
 
 	unpicked() {
@@ -68,13 +67,11 @@ let part2: number;
 for (let number of numbers) {
 	for (const board of boards) {
 		if (board.draw(number)) {
-			if (!part1) {
+			if (!part1)
 				part1 = board.unpicked().sum() * number
-			}
 
-			if (!part2 && boards.every(board => board.hasWon())) {
+			if (!part2 && boards.every(board => board.hasWon()))
 				part2 = board.unpicked().sum() * number
-			}
 		}
 	}
 }
