@@ -16,7 +16,11 @@ for (let day of activeDays) {
 			.filter(member => !ignoreMembers.includes(member.name))
 			.filter(member => member.completion_day_level?.[day]?.[part])
 			.sort((member1, member2) => member1.completion_day_level[day][part].get_star_ts - member2.completion_day_level[day][part].get_star_ts)
-			.forEach(member => (puzzles[day + "-" + part] ??= []).push(member.name));
+			.forEach(member => {
+				if (!puzzles[day + "-" + part])
+					puzzles[day + "-" + part] = [];
+				puzzles[day + "-" + part].push(member.name);
+			});
 	}
 }
 
