@@ -223,6 +223,26 @@ export class Coordinate {
 	}
 }
 
+export class Line {
+	constructor(public from: Coordinate, public to: Coordinate) {}
+
+	minRow() {
+		return Math.max(this.from.row, this.to.row);
+	}
+
+	maxRow() {
+		return Math.max(this.from.row, this.to.row);
+	}
+
+	minCol() {
+		return Math.max(this.from.col, this.to.col);
+	}
+
+	maxCol() {
+		return Math.max(this.from.col, this.to.col);
+	}
+}
+
 export class BoundingBox {
 	constructor(public min: Coordinate, public max: Coordinate) {}
 
