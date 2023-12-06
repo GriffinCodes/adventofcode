@@ -25,6 +25,8 @@ declare global {
 	interface String {
 		binaryToDecimal(): number;
 		asNumberArray(splitter: string | RegExp): number[];
+		sort(): string;
+		includesAll(characters: string): boolean;
 	}
 
 	interface Object {
@@ -114,6 +116,18 @@ String.prototype.binaryToDecimal = function(): number {
 
 String.prototype.asNumberArray = function(splitter: string | RegExp): number[] {
 	return this.split(splitter).map(number => Number(number));
+}
+
+String.prototype.sort = function(): string {
+	return this.split("").sort().join("")
+}
+
+String.prototype.includesAll = function(characters: string): boolean {
+	for (let char of characters.split(""))
+		if (!this.includes(char))
+			return false;
+
+	return true;
 }
 
 Object.prototype.sortByValue = function(): { [key: string]: number } {
@@ -284,6 +298,13 @@ export class NumberRange {
 
 	contains(number: number) {
 		return this.start <= number && this.end >= number;
+	}
+
+	iterator(): number[] {
+		let numbers: number[] = [];
+		for (let i = this.start; i <= this.end; i++)
+			numbers.push(i)
+		return numbers;
 	}
 }
 
