@@ -18,6 +18,7 @@ declare global {
 		chunk(size: number): T[];
 		distinct(): T[];
 		shuffle(): T[];
+		sortNumeric(): T[];
 	}
 
 	interface String {
@@ -70,6 +71,10 @@ Array.prototype.average = function(): number {
 
 Array.prototype.iterator = function(): Iterator {
 	return new Iterator(this);
+}
+
+Array.prototype.sortNumeric = function(): any[] {
+	return this.sort((a, b) => a - b);
 }
 
 Array.prototype.chunk = function(size: number): any[][] {
