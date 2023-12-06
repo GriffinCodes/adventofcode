@@ -1,1 +1,560 @@
-{"event":"2023","owner_id":298396,"members":{"3255551":{"stars":12,"name":"maddipati srinivas","global_score":0,"id":3255551,"last_star_ts":1701840811,"completion_day_level":{"2":{"2":{"get_star_ts":1701496367,"star_index":270631},"1":{"star_index":265448,"get_star_ts":1701495487}},"4":{"2":{"star_index":785903,"get_star_ts":1701671545},"1":{"star_index":770759,"get_star_ts":1701668235}},"5":{"2":{"star_index":1067523,"get_star_ts":1701764155},"1":{"star_index":1051432,"get_star_ts":1701757986}},"1":{"1":{"get_star_ts":1701410177,"star_index":0},"2":{"get_star_ts":1701418403,"star_index":25124}},"6":{"2":{"get_star_ts":1701840811,"star_index":1252910},"1":{"star_index":1243705,"get_star_ts":1701839809}},"3":{"1":{"get_star_ts":1701662417,"star_index":747923},"2":{"star_index":808837,"get_star_ts":1701677466}}},"local_score":146},"3207379":{"name":"mikejones0925","global_score":0,"stars":2,"local_score":6,"completion_day_level":{"1":{"1":{"get_star_ts":1701725857,"star_index":989443},"2":{"star_index":1115196,"get_star_ts":1701783130}}},"last_star_ts":1701783130,"id":3207379},"3255582":{"stars":3,"name":"Janarthanan Moorthy","global_score":0,"last_star_ts":1701833927,"id":3255582,"local_score":12,"completion_day_level":{"4":{"1":{"star_index":1152134,"get_star_ts":1701796961},"2":{"star_index":1229099,"get_star_ts":1701833927}},"1":{"1":{"get_star_ts":1701490897,"star_index":245700}}}},"298396":{"last_star_ts":1701811474,"id":298396,"completion_day_level":{"5":{"1":{"get_star_ts":1701811474,"star_index":1192117}},"1":{"1":{"get_star_ts":1701443058,"star_index":115760},"2":{"get_star_ts":1701444230,"star_index":120616}},"2":{"1":{"get_star_ts":1701717420,"star_index":958951},"2":{"get_star_ts":1701718209,"star_index":961710}},"4":{"1":{"star_index":908929,"get_star_ts":1701703565},"2":{"star_index":918812,"get_star_ts":1701706169}}},"local_score":65,"stars":7,"name":"Robert Renaud","global_score":0},"3207832":{"global_score":0,"name":"ssaquetonpmic","stars":2,"local_score":20,"completion_day_level":{"4":{"2":{"get_star_ts":1701698943,"star_index":891526},"1":{"get_star_ts":1701696722,"star_index":883065}}},"last_star_ts":1701698943,"id":3207832},"3255250":{"last_star_ts":1701468357,"id":3255250,"local_score":7,"completion_day_level":{"1":{"1":{"star_index":206999,"get_star_ts":1701468357}}},"stars":1,"name":"Duey 2000","global_score":0},"3212236":{"local_score":151,"completion_day_level":{"3":{"1":{"star_index":648098,"get_star_ts":1701621412},"2":{"get_star_ts":1701641624,"star_index":714614}},"6":{"2":{"get_star_ts":1701840158,"star_index":1247658},"1":{"get_star_ts":1701840026,"star_index":1246230}},"1":{"1":{"get_star_ts":1701440583,"star_index":105760},"2":{"star_index":117836,"get_star_ts":1701443556}},"5":{"2":{"get_star_ts":1701758549,"star_index":1052998},"1":{"get_star_ts":1701754273,"star_index":1038085}},"4":{"2":{"get_star_ts":1701667446,"star_index":764681},"1":{"star_index":756721,"get_star_ts":1701666692}},"2":{"2":{"get_star_ts":1701494745,"star_index":259727},"1":{"get_star_ts":1701494191,"star_index":254437}}},"last_star_ts":1701840158,"id":3212236,"name":"Griffin Kubesa","global_score":0,"stars":12},"3250993":{"global_score":0,"name":"Sasikumar Sakthivel","stars":10,"local_score":102,"completion_day_level":{"3":{"2":{"get_star_ts":1701706609,"star_index":920483},"1":{"star_index":587438,"get_star_ts":1701602892}},"4":{"2":{"get_star_ts":1701716109,"star_index":954386},"1":{"star_index":771676,"get_star_ts":1701668376}},"2":{"2":{"get_star_ts":1701502210,"star_index":290859},"1":{"get_star_ts":1701500916,"star_index":287067}},"1":{"2":{"get_star_ts":1701451346,"star_index":149129},"1":{"star_index":113392,"get_star_ts":1701442453}},"5":{"1":{"star_index":1225651,"get_star_ts":1701830641},"2":{"get_star_ts":1701832852,"star_index":1227945}}},"id":3250993,"last_star_ts":1701832852},"3224788":{"name":"sumapcf","global_score":0,"stars":7,"local_score":64,"completion_day_level":{"1":{"2":{"get_star_ts":1701477454,"star_index":229021},"1":{"star_index":18852,"get_star_ts":1701416514}},"5":{"1":{"star_index":1206676,"get_star_ts":1701817018}},"4":{"1":{"star_index":781289,"get_star_ts":1701670351},"2":{"star_index":1047499,"get_star_ts":1701756672}},"2":{"1":{"get_star_ts":1701558471,"star_index":486615},"2":{"get_star_ts":1701559621,"star_index":489258}}},"last_star_ts":1701817018,"id":3224788},"3475082":{"completion_day_level":{"4":{"1":{"get_star_ts":1701800120,"star_index":1160332},"2":{"get_star_ts":1701810411,"star_index":1188977}},"1":{"1":{"star_index":219464,"get_star_ts":1701472717},"2":{"star_index":229181,"get_star_ts":1701477556}}},"local_score":20,"last_star_ts":1701810411,"id":3475082,"name":"Uma Subramanian","global_score":0,"stars":4},"3207434":{"stars":6,"name":"Matt Asplin","global_score":0,"last_star_ts":1701813544,"id":3207434,"local_score":54,"completion_day_level":{"4":{"1":{"get_star_ts":1701703887,"star_index":910176},"2":{"star_index":929328,"get_star_ts":1701708985}},"1":{"1":{"star_index":149159,"get_star_ts":1701451355},"2":{"star_index":192444,"get_star_ts":1701463920}},"5":{"2":{"star_index":1197980,"get_star_ts":1701813544},"1":{"star_index":1183432,"get_star_ts":1701808541}}}},"3434412":{"completion_day_level":{"5":{"1":{"get_star_ts":1701832196,"star_index":1227272}},"1":{"1":{"get_star_ts":1701491612,"star_index":246517},"2":{"get_star_ts":1701492000,"star_index":246953}},"4":{"1":{"star_index":896648,"get_star_ts":1701700296},"2":{"star_index":1014240,"get_star_ts":1701736264}}},"local_score":31,"id":3434412,"last_star_ts":1701832196,"global_score":0,"name":"bhavana alluri","stars":5},"3211971":{"last_star_ts":1701711999,"id":3211971,"local_score":21,"completion_day_level":{"4":{"2":{"get_star_ts":1701711999,"star_index":940025},"1":{"get_star_ts":1701711084,"star_index":936776}},"1":{"2":{"get_star_ts":1701709188,"star_index":930148},"1":{"star_index":915636,"get_star_ts":1701705336}}},"stars":4,"name":null,"global_score":0}}}
+{
+"members": {
+"298396": {
+"local_score": 65,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 115760,
+"get_star_ts": 1701443058
+},
+"2": {
+"get_star_ts": 1701444230,
+"star_index": 120616
+}
+},
+"2": {
+"1": {
+"star_index": 958951,
+"get_star_ts": 1701717420
+},
+"2": {
+"star_index": 961710,
+"get_star_ts": 1701718209
+}
+},
+"4": {
+"1": {
+"star_index": 908929,
+"get_star_ts": 1701703565
+},
+"2": {
+"get_star_ts": 1701706169,
+"star_index": 918812
+}
+},
+"5": {
+"1": {
+"star_index": 1192117,
+"get_star_ts": 1701811474
+}
+}
+},
+"name": "Robert Renaud",
+"stars": 7,
+"global_score": 0,
+"last_star_ts": 1701811474,
+"id": 298396
+},
+"3207379": {
+"id": 3207379,
+"last_star_ts": 1701783130,
+"global_score": 0,
+"stars": 2,
+"name": "mikejones0925",
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701725857,
+"star_index": 989443
+},
+"2": {
+"star_index": 1115196,
+"get_star_ts": 1701783130
+}
+}
+},
+"local_score": 6
+},
+"3207434": {
+"global_score": 0,
+"stars": 6,
+"name": "Matt Asplin",
+"id": 3207434,
+"last_star_ts": 1701813544,
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701451355,
+"star_index": 149159
+},
+"2": {
+"star_index": 192444,
+"get_star_ts": 1701463920
+}
+},
+"4": {
+"1": {
+"get_star_ts": 1701703887,
+"star_index": 910176
+},
+"2": {
+"get_star_ts": 1701708985,
+"star_index": 929328
+}
+},
+"5": {
+"1": {
+"star_index": 1183432,
+"get_star_ts": 1701808541
+},
+"2": {
+"star_index": 1197980,
+"get_star_ts": 1701813544
+}
+}
+},
+"local_score": 54
+},
+"3207832": {
+"local_score": 20,
+"completion_day_level": {
+"4": {
+"1": {
+"get_star_ts": 1701696722,
+"star_index": 883065
+},
+"2": {
+"get_star_ts": 1701698943,
+"star_index": 891526
+}
+}
+},
+"name": "ssaquetonpmic",
+"global_score": 0,
+"stars": 2,
+"last_star_ts": 1701698943,
+"id": 3207832
+},
+"3211971": {
+"id": 3211971,
+"last_star_ts": 1701711999,
+"global_score": 0,
+"stars": 4,
+"name": null,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 915636,
+"get_star_ts": 1701705336
+},
+"2": {
+"star_index": 930148,
+"get_star_ts": 1701709188
+}
+},
+"4": {
+"1": {
+"get_star_ts": 1701711084,
+"star_index": 936776
+},
+"2": {
+"get_star_ts": 1701711999,
+"star_index": 940025
+}
+}
+},
+"local_score": 21
+},
+"3212236": {
+"local_score": 151,
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701440583,
+"star_index": 105760
+},
+"2": {
+"get_star_ts": 1701443556,
+"star_index": 117836
+}
+},
+"2": {
+"1": {
+"get_star_ts": 1701494191,
+"star_index": 254437
+},
+"2": {
+"get_star_ts": 1701494745,
+"star_index": 259727
+}
+},
+"3": {
+"1": {
+"get_star_ts": 1701621412,
+"star_index": 648098
+},
+"2": {
+"get_star_ts": 1701641624,
+"star_index": 714614
+}
+},
+"4": {
+"1": {
+"get_star_ts": 1701666692,
+"star_index": 756721
+},
+"2": {
+"star_index": 764681,
+"get_star_ts": 1701667446
+}
+},
+"5": {
+"1": {
+"get_star_ts": 1701754273,
+"star_index": 1038085
+},
+"2": {
+"star_index": 1052998,
+"get_star_ts": 1701758549
+}
+},
+"6": {
+"1": {
+"star_index": 1246230,
+"get_star_ts": 1701840026
+},
+"2": {
+"star_index": 1247658,
+"get_star_ts": 1701840158
+}
+}
+},
+"name": "Griffin Kubesa",
+"global_score": 0,
+"stars": 12,
+"last_star_ts": 1701840158,
+"id": 3212236
+},
+"3224788": {
+"name": "sumapcf",
+"stars": 9,
+"global_score": 0,
+"last_star_ts": 1701846839,
+"id": 3224788,
+"local_score": 82,
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701416514,
+"star_index": 18852
+},
+"2": {
+"get_star_ts": 1701477454,
+"star_index": 229021
+}
+},
+"2": {
+"1": {
+"star_index": 486615,
+"get_star_ts": 1701558471
+},
+"2": {
+"star_index": 489258,
+"get_star_ts": 1701559621
+}
+},
+"4": {
+"1": {
+"star_index": 781289,
+"get_star_ts": 1701670351
+},
+"2": {
+"get_star_ts": 1701756672,
+"star_index": 1047499
+}
+},
+"5": {
+"1": {
+"star_index": 1206676,
+"get_star_ts": 1701817018
+}
+},
+"6": {
+"1": {
+"get_star_ts": 1701846202,
+"star_index": 1272953
+},
+"2": {
+"get_star_ts": 1701846839,
+"star_index": 1275062
+}
+}
+}
+},
+"3250993": {
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 113392,
+"get_star_ts": 1701442453
+},
+"2": {
+"star_index": 149129,
+"get_star_ts": 1701451346
+}
+},
+"2": {
+"1": {
+"star_index": 287067,
+"get_star_ts": 1701500916
+},
+"2": {
+"star_index": 290859,
+"get_star_ts": 1701502210
+}
+},
+"3": {
+"1": {
+"star_index": 587438,
+"get_star_ts": 1701602892
+},
+"2": {
+"get_star_ts": 1701706609,
+"star_index": 920483
+}
+},
+"4": {
+"1": {
+"get_star_ts": 1701668376,
+"star_index": 771676
+},
+"2": {
+"star_index": 954386,
+"get_star_ts": 1701716109
+}
+},
+"5": {
+"1": {
+"star_index": 1225651,
+"get_star_ts": 1701830641
+},
+"2": {
+"get_star_ts": 1701832852,
+"star_index": 1227945
+}
+},
+"6": {
+"1": {
+"get_star_ts": 1701842387,
+"star_index": 1260504
+},
+"2": {
+"get_star_ts": 1701843772,
+"star_index": 1265075
+}
+}
+},
+"local_score": 122,
+"id": 3250993,
+"last_star_ts": 1701843772,
+"global_score": 0,
+"stars": 12,
+"name": "Sasikumar Sakthivel"
+},
+"3255250": {
+"local_score": 7,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 206999,
+"get_star_ts": 1701468357
+}
+}
+},
+"name": "Duey 2000",
+"stars": 1,
+"global_score": 0,
+"last_star_ts": 1701468357,
+"id": 3255250
+},
+"3255551": {
+"local_score": 146,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 0,
+"get_star_ts": 1701410177
+},
+"2": {
+"get_star_ts": 1701418403,
+"star_index": 25124
+}
+},
+"2": {
+"1": {
+"star_index": 265448,
+"get_star_ts": 1701495487
+},
+"2": {
+"star_index": 270631,
+"get_star_ts": 1701496367
+}
+},
+"3": {
+"1": {
+"star_index": 747923,
+"get_star_ts": 1701662417
+},
+"2": {
+"star_index": 808837,
+"get_star_ts": 1701677466
+}
+},
+"4": {
+"1": {
+"star_index": 770759,
+"get_star_ts": 1701668235
+},
+"2": {
+"star_index": 785903,
+"get_star_ts": 1701671545
+}
+},
+"5": {
+"1": {
+"star_index": 1051432,
+"get_star_ts": 1701757986
+},
+"2": {
+"get_star_ts": 1701764155,
+"star_index": 1067523
+}
+},
+"6": {
+"1": {
+"star_index": 1243705,
+"get_star_ts": 1701839809
+},
+"2": {
+"star_index": 1252910,
+"get_star_ts": 1701840811
+}
+}
+},
+"name": "maddipati srinivas",
+"stars": 12,
+"global_score": 0,
+"last_star_ts": 1701840811,
+"id": 3255551
+},
+"3255582": {
+"stars": 6,
+"global_score": 0,
+"name": "Janarthanan Moorthy",
+"id": 3255582,
+"last_star_ts": 1701843789,
+"completion_day_level": {
+"1": {
+"1": {
+"star_index": 245700,
+"get_star_ts": 1701490897
+},
+"2": {
+"star_index": 1265138,
+"get_star_ts": 1701843789
+}
+},
+"4": {
+"1": {
+"get_star_ts": 1701796961,
+"star_index": 1152134
+},
+"2": {
+"star_index": 1229099,
+"get_star_ts": 1701833927
+}
+},
+"6": {
+"1": {
+"get_star_ts": 1701841076,
+"star_index": 1254537
+},
+"2": {
+"star_index": 1258068,
+"get_star_ts": 1701841778
+}
+}
+},
+"local_score": 37
+},
+"3434412": {
+"name": "bhavana alluri",
+"global_score": 0,
+"stars": 7,
+"last_star_ts": 1701869787,
+"id": 3434412,
+"local_score": 47,
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701491612,
+"star_index": 246517
+},
+"2": {
+"get_star_ts": 1701492000,
+"star_index": 246953
+}
+},
+"4": {
+"1": {
+"get_star_ts": 1701700296,
+"star_index": 896648
+},
+"2": {
+"star_index": 1014240,
+"get_star_ts": 1701736264
+}
+},
+"5": {
+"1": {
+"get_star_ts": 1701832196,
+"star_index": 1227272
+}
+},
+"6": {
+"1": {
+"star_index": 1340750,
+"get_star_ts": 1701867987
+},
+"2": {
+"get_star_ts": 1701869787,
+"star_index": 1345631
+}
+}
+}
+},
+"3475082": {
+"local_score": 20,
+"completion_day_level": {
+"1": {
+"1": {
+"get_star_ts": 1701472717,
+"star_index": 219464
+},
+"2": {
+"star_index": 229181,
+"get_star_ts": 1701477556
+}
+},
+"4": {
+"1": {
+"get_star_ts": 1701800120,
+"star_index": 1160332
+},
+"2": {
+"get_star_ts": 1701810411,
+"star_index": 1188977
+}
+}
+},
+"last_star_ts": 1701810411,
+"id": 3475082,
+"name": "Uma Subramanian",
+"stars": 4,
+"global_score": 0
+}
+},
+"owner_id": 298396,
+"event": "2023"
+}

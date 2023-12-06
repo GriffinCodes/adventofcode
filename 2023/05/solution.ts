@@ -53,10 +53,13 @@ let groups = readFile(example() ? 'example' : 'input').split(DOUBLE_NEWLINE);
 let seeds: number[] = groups.shift().split(": ")[1].asNumberArray(" ");
 let seedRanges: NumberRange[] = seeds.chunk(2).map(chunk => new NumberRange(chunk[0], chunk[1]));
 
-let maps: ConversionMap[] = groups.map(group => new ConversionMap(group.split(NEWLINE).slice(1).map(line => {
-	for (let matcher of line.matchAll(/(\d+) (\d+) (\d+)/g))
-		return new Conversion(Number(matcher[1]), Number(matcher[2]), Number(matcher[3]))
-})));
+let maps: ConversionMap[] = groups.map(group => {
+	let conversions = group.split(NEWLINE).slice(1).map(line => {
+		for (let matcher of line.matchAll(/(\d+) (\d+) (\d+)/g))
+			return new Conversion(Number(matcher[1]), Number(matcher[2]), Number(matcher[3]))
+	});
+	return new ConversionMap(conversions);
+});
 let reversed = maps.slice(0).reverse();
 
 console.log(seeds.map(seed => forwards(seed)).min());

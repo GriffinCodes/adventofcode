@@ -1,4 +1,4 @@
-import {example, NEWLINE, readFile} from "../../shared/util";
+import { example, NEWLINE, readFile } from "../../shared/util";
 
 class Race {
 	constructor(public time: number, public distance: number) {}
@@ -28,15 +28,14 @@ let times = input[0].asNumberArray(/\s+/);
 let distances = input[1].asNumberArray(/\s+/);
 
 times.forEach((time, index) => {
-	let distance = distances[index];
-	races.push(new Race(time, distance))
+	races.push(new Race(time, distances[index]))
 })
 
 console.log(races.map(race => race.diff()).product());
 
 let race: Race = new Race(
-	Number(input[0].replace(/\s/g, "")),
-	Number(input[1].replace(/\s/g, ""))
+	Number(times.join("")),
+	Number(distances.join(""))
 );
 
 console.log(race.diff());
