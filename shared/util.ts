@@ -18,6 +18,7 @@ declare global {
 		iterator(): Iterator;
 		chunk(size: number): T[];
 		distinct(): T[];
+		nonZero(): T[];
 		shuffle(): T[];
 		sortNumeric(): T[];
 	}
@@ -89,6 +90,10 @@ Array.prototype.iterator = function(): Iterator {
 
 Array.prototype.sortNumeric = function(): any[] {
 	return this.sort((a, b) => a - b);
+}
+
+Array.prototype.nonZero = function(): any[] {
+	return this.filter(number => number !== 0);
 }
 
 Array.prototype.chunk = function(size: number): any[][] {
