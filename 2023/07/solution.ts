@@ -4,33 +4,28 @@ let part: number
 let cardOrder: string
 
 class Hand {
-	frequencies: number[] = Array(cardOrder.length).fill(0)
 	strength: number
 
 	constructor(public cards: string, public bid: number) {
-		this.frequencies = this.getFrequencies()
 		this.strength = this.getStrength()
 	}
 
-	getFrequencies() {
+	getStrength() {
+		let frequencies: number[] = Array(cardOrder.length).fill(0)
 		let jokers: number = 0
 
-		for (const card of this.cards.split(""))
+		for (let card of this.cards.split(""))
 			if (part == 2 && card == "J")
 				++jokers
 			else
-				++this.frequencies[cardOrder.indexOf(card)]
+				++frequencies[cardOrder.indexOf(card)]
 
-		this.frequencies.sortNumeric().reverse()
+		frequencies.sortNumeric().reverse()
 
 		if (part == 2)
-			this.frequencies[0] += jokers
+			frequencies[0] += jokers
 
-		return this.frequencies.nonZero()
-	}
-
-	getStrength() {
-		return this.frequencies.map((frequency, index) => frequency * index).sum();
+		return frequencies.nonZero().map((frequency, index) => frequency * index).sum();
 	}
 
 	getRankOfCardAt(index: number) {
