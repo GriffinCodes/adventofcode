@@ -53,7 +53,7 @@ class Hand {
 			return HandType.FOUR_OF_A_KIND;
 
 		if (countFrequency(3) == 1 && countFrequency(2) == 1)
-				return HandType.FULL_HOUSE;
+			return HandType.FULL_HOUSE;
 
 		if (countFrequency(3) == 1)
 			return HandType.THREE_OF_A_KIND;
