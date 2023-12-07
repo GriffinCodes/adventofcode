@@ -88,23 +88,19 @@ class Hand {
 	}
 }
 
-let run = () => {
-	let result = readFile(example() ? 'example' : 'input')
-			.split(NEWLINE)
-			.map(line => line.split(" "))
-			.map(split => new Hand(split[0], Number(split[1])))
-			.sort((hand1, hand2) => hand1.compareTo(hand2))
-			.reverse()
-			.map((hand, index) => (index + 1) * hand.bid)
-			.sum()
-
-	console.log(result)
-}
+let run = (): number => readFile(example() ? 'example' : 'input')
+		.split(NEWLINE)
+		.map(line => line.split(" "))
+		.map(split => new Hand(split[0], Number(split[1])))
+		.sort((hand1, hand2) => hand1.compareTo(hand2))
+		.reverse()
+		.map((hand, index) => (index + 1) * hand.bid)
+		.sum()
 
 part = 1
 cardOrder = "AKQJT98765432"
-run()
+console.log(run())
 
 part = 2
 cardOrder = "AKQT98765432J"
-run()
+console.log(run())
