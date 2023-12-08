@@ -30,5 +30,5 @@ Object.values(puzzles).forEach(finishers => {
 })
 
 Object.keys(members.sortByValueReverse()).forEach(name => {
-	console.log(ansi(Color.YELLOW, String(members[name]).padStart(2)), name);
+	console.log(ansi(Color.YELLOW, String(members[name]).padStart(3)), name);
 });
