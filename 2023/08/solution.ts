@@ -11,12 +11,12 @@ class Node {
 	}
 }
 
-let nodes: Node[] = input.shift().split(NEWLINE).map(line => {
+input.shift().split(NEWLINE).map(line => {
 	for (let matcher of line.matchAll(/(\w+) = \((\w+), (\w+)\)/g))
 		return new Node(matcher[1], matcher[2], matcher[3]);
 });
 
-let node = nodes[0]
+let node = Node.instances['AAA']
 let steps = 0
 
 while (node.name != 'ZZZ') {
