@@ -4,6 +4,14 @@ export function example(): boolean {
 	return process.argv.includes("-e") || process.argv.includes("--example");
 }
 
+export function exampleFile(): string {
+	let arg = process.argv.find(arg => arg.startsWith("-e") || arg.startsWith("--example"));
+	if (!arg)
+		return null;
+
+	return "example" + arg.split("=")[1];
+}
+
 declare global {
 	interface Array<T> {
 		count(predicate: (value: T) => boolean): number;
