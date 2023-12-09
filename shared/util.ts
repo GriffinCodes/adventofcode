@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 export function example(): boolean {
-	return process.argv.includes("-e") || process.argv.includes("--example");
+	return !!process.argv.find(arg => arg.startsWith("-e") || arg.startsWith("--example"));
 }
 
 export function exampleFile(): string {
@@ -10,6 +10,14 @@ export function exampleFile(): string {
 		return null;
 
 	return "example" + arg.split("=")[1];
+}
+
+export function part(): number {
+	let arg = process.argv.find(arg => arg.startsWith("-p") || arg.startsWith("--part"));
+	if (!arg)
+		return null;
+
+	return Number(arg.split("=")[1]);
 }
 
 declare global {
@@ -23,6 +31,8 @@ declare global {
 		max(): number;
 		average(): number;
 		median(): number;
+		gcd(): number;
+		lcm(): number;
 		iterator(): Iterator;
 		chunk(size: number): T[];
 		distinct(): T[];
@@ -90,6 +100,29 @@ Array.prototype.median = function(): number {
 	}
 
 	return sorted[middle];
+}
+
+export function gcd(x = 0, y = 0): number {
+	x = Math.abs(x);
+	y = Math.abs(y);
+	while (y) {
+		const t = y;
+		y = x % y;
+		x = t;
+	}
+	return x;
+}
+
+export function lcm(x?: number, y?: number): number {
+	return !x || !y ? 0 : Math.abs((x * y) / gcd(x, y));
+}
+
+Array.prototype.lcm = function(): number {
+	return this.reduce((a, n) => gcd(a, n), 1)
+}
+
+Array.prototype.lcm = function(): number {
+	return this.reduce((a, n) => lcm(a, n), 1)
 }
 
 Array.prototype.iterator = function(): Iterator {
