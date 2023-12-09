@@ -42,7 +42,7 @@ class Hand {
 	}
 }
 
-let run = (): number => readFile(example() ? 'example' : 'input')
+let run = () => readFile(example() ? 'example' : 'input')
 		.split(NEWLINE)
 		.map(line => line.split(" "))
 		.map(split => new Hand(split[0], Number(split[1])))
@@ -50,11 +50,12 @@ let run = (): number => readFile(example() ? 'example' : 'input')
 		.reverse()
 		.map((hand, index) => (index + 1) * hand.bid)
 		.sum()
+		.print()
 
 part = 1
 cardOrder = "AKQJT98765432"
-console.log(run())
+run()
 
 part = 2
 cardOrder = "AKQT98765432J"
-console.log(run())
+run()

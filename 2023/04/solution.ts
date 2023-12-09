@@ -26,5 +26,5 @@ cards.forEach((card, index) => {
 	});
 });
 
-console.log(cards.map(card => card.value).sum());
-console.log(cards.map(card => card.copies).sum());
+cards.map(card => card.value).sum().print();
+cards.map(card => card.copies).sum().print();

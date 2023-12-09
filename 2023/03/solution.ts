@@ -33,11 +33,16 @@ while (iterator.hasNext()) {
 		symbols.push(new SchematicSymbol(matcher[0], Coordinate.of(row, matcher.index)));
 }
 
-console.log(symbols.map(symbol => symbol.adjacents()).flat().map(number => number.number).sum());
+symbols
+	.map(symbol => symbol.adjacents())
+	.flat()
+	.map(number => number.number)
+	.sum()
+	.print();
 
-console.log(symbols
+symbols
 	.filter(symbol => symbol.symbol == '*' && symbol.adjacents().length == 2)
 	.map(symbol => symbol.adjacents().map(number => number.number).product())
 	.flat()
 	.sum()
-);
+	.print()

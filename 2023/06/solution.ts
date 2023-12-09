@@ -31,14 +31,14 @@ times.forEach((time, index) => {
 	races.push(new Race(time, distances[index]))
 })
 
-console.log(races.map(race => race.diff()).product());
+races.map(race => race.diff()).product().print()
 
 let race: Race = new Race(
 	Number(times.join("")),
 	Number(distances.join(""))
 );
 
-console.log(race.diff());
+race.diff().print()
 
 
 

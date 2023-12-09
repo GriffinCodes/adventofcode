@@ -26,7 +26,7 @@ let spelledOut = {
 let digits = "(\\d|" + Object.keys(spelledOut).join("|") + ")";
 let regex: RegExp = new RegExp("(?=" + digits + ").*" + digits + "", "g");
 
-console.log(readFile(example() ? 'example2' : 'input')
+readFile(example() ? 'example2' : 'input')
 	.split(NEWLINE)
 	.map(line => {
 		let numbers = [];
@@ -41,4 +41,6 @@ console.log(readFile(example() ? 'example2' : 'input')
 			}
 		}
 		return parseLine(numbers.join(""));
-	}).sum());
+	})
+	.sum()
+	.print()

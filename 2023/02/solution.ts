@@ -24,5 +24,15 @@ readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
 					game.colors[color] = Math.max(Number(count.replace(/\D/g, "")), game.colors[color] || 0);
 })
 
-console.log(games.filter(game => colors().every(color => game.colors[color] <= maxes[color])).map(game => game.id).sum());
-console.log(games.map(game => colors().map(color => game.colors[color]).product()).sum());
+games
+	.filter(game => colors().every(color => game.colors[color] <= maxes[color]))
+	.map(game => game.id)
+	.sum()
+	.print()
+
+games
+	.map(game => colors()
+	.map(color => game.colors[color])
+	.product())
+	.sum()
+	.print()

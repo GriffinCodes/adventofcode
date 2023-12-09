@@ -62,13 +62,13 @@ let maps: ConversionMap[] = groups.map(group => {
 });
 let reversed = maps.slice(0).reverse();
 
-console.log(seeds.map(seed => forwards(seed)).min());
+seeds.map(seed => forwards(seed)).min().print()
 
 let location = -1;
 while (true) {
 	let seed = backwards(++location);
 	if (seedRanges.some(seedRange => seedRange.contains(seed))) {
-		console.log(location);
+		location.print()
 		break;
 	}
 }

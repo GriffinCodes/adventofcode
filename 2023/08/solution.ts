@@ -19,7 +19,7 @@ function stepUntil(node: string, predicate: (node: string) => boolean, steps: nu
 }
 
 if (!exampleFile()?.includes('3'))
-	console.log(stepUntil('AAA', node => node == 'ZZZ'))
+	stepUntil('AAA', node => node == 'ZZZ').print()
 
 let ghosts: string[] = Object.keys(nodes).filter(key => key.endsWith('A'))
-console.log(ghosts.map(ghost => stepUntil(ghost, node => node.endsWith('Z'))).lcm());
+ghosts.map(ghost => stepUntil(ghost, node => node.endsWith('Z'))).lcm().print()
