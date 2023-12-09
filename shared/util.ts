@@ -12,6 +12,14 @@ export function exampleFile(): string {
 	return "example" + (arg?.split("=")[1] ?? "");
 }
 
+export function inputFile(): string {
+	let arg = process.argv.find(arg => arg.startsWith("-i") || arg.startsWith("--input"));
+	if (!arg)
+		return "input";
+
+	return "input" + (arg?.split("=")[1] ?? "");
+}
+
 export function part(): number {
 	let arg = process.argv.find(arg => arg.startsWith("-p") || arg.startsWith("--part"));
 	if (!arg)
@@ -235,8 +243,8 @@ export function ansi(color: string, text: string) {
 	return color + text + Color.RESET;
 }
 
-export function readFile(filename: string): string {
-	return fs.readFileSync(filename, 'utf8');
+export function readFile(filename?: string): string {
+	return fs.readFileSync(filename ?? exampleFile() ?? inputFile(), 'utf8');
 }
 
 export function deepClone(obj: any) {

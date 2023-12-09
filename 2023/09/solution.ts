@@ -1,20 +1,19 @@
-import {exampleFile, NEWLINE, readFile} from "../../shared/util"
+import {NEWLINE, readFile} from "../../shared/util"
 
-let run = (part: number) => readFile(exampleFile() ?? 'input')
+let run = (part: number) => readFile()
 	.split(NEWLINE)
 	.map(line => line.asNumberArray(" "))
 	.map(numbers => {
-		let differences = [part == 1 ? numbers : numbers.reverse()]
+		let extrapolations = [part == 1 ? numbers : numbers.reverse()]
 
-		while (differences.last().nonZero().isNotEmpty()) {
-			let values = differences.last()
-			differences.push(values.slice(0, values.length - 1).map((number, index) => values[index + 1] - number))
-		}
+		let values;
+		while ((values = extrapolations.last()).nonZero().isNotEmpty())
+			extrapolations.push(values.slice(0, values.length - 1).map((number, index) => values[index + 1] - number))
 
-		return differences.reverse().reduce((sum, diffs) => sum += diffs.last(), 0)
+		return extrapolations.reverse().map(sequence => sequence.last()).sum()
 	})
 	.sum()
 	.print()
 
-run(1);
-run(2);
+run(1)
+run(2)
