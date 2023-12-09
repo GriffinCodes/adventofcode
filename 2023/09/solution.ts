@@ -1,23 +1,20 @@
 import {exampleFile, NEWLINE, readFile} from "../../shared/util"
 
-let forwards = [], backwards = []
+let run = (part: number) => readFile(exampleFile() ?? 'input')
+	.split(NEWLINE)
+	.map(line => line.asNumberArray(" "))
+	.map(numbers => {
+		let differences = [part == 1 ? numbers : numbers.reverse()]
 
-readFile(exampleFile() ?? 'input').split(NEWLINE).map(line => line.asNumberArray(" ")).forEach(numbers => {
-	let differences = [numbers]
+		while (differences.last().nonZero().isNotEmpty()) {
+			let values = differences.last()
+			differences.push(values.slice(0, values.length - 1).map((number, index) => values[index + 1] - number))
+		}
 
-	while (differences.last().nonZero().isNotEmpty()) {
-		let values = differences.last()
-		differences.push(values.slice(0, values.length - 1).map((number, index) => values[index + 1] - number))
-	}
-
-	let forward = 0, backward = 0
-	differences.reverse().forEach(diffs => {
-		forward = diffs.last() + forward
-		backward = diffs.first() - backward
+		return differences.reverse().reduce((sum, diffs) => sum += diffs.last(), 0)
 	})
-	forwards.push(forward)
-	backwards.push(backward)
-})
+	.sum()
+	.print()
 
-console.log(forwards.sum())
-console.log(backwards.sum())
+run(1);
+run(2);

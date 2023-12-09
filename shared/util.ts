@@ -55,6 +55,7 @@ declare global {
 	interface Object {
 		sortByValue(): { [key: string]: number };
 		sortByValueReverse(): { [key: string]: number };
+		print(): void;
 	}
 }
 
@@ -206,6 +207,10 @@ Object.prototype.sortByValueReverse = function(): { [key: string]: number } {
 	return Object.entries(this)
 		.sort((a, b) => Number(b[1]) - Number(a[1]))
 		.reduce((sorted, [k, v]) => ({...sorted, [k]: v}), {});
+}
+
+Object.prototype.print = function(): void {
+	console.log(this);
 }
 
 export const NEWLINE = /\r?\n/;
