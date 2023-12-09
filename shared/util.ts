@@ -9,7 +9,7 @@ export function exampleFile(): string {
 	if (!arg)
 		return null;
 
-	return "example" + arg.split("=")[1];
+	return "example" + (arg?.split("=")[1] ?? "");
 }
 
 export function part(): number {
@@ -39,6 +39,10 @@ declare global {
 		nonZero(): T[];
 		shuffle(): T[];
 		sortNumeric(): T[];
+		last(): T;
+		first(): T;
+		isEmpty(): boolean;
+		isNotEmpty(): boolean;
 	}
 
 	interface String {
@@ -154,6 +158,22 @@ Array.prototype.shuffle = function(): any[] {
 	}
 
 	return this;
+}
+
+Array.prototype.last = function(): any {
+	return this[this.length - 1];
+}
+
+Array.prototype.first = function(): any {
+	return this[0];
+}
+
+Array.prototype.isEmpty = function(): boolean {
+	return this.length === 0;
+}
+
+Array.prototype.isNotEmpty = function(): boolean {
+	return this.length !== 0;
 }
 
 String.prototype.binaryToDecimal = function(): number {
