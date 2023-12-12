@@ -1,4 +1,4 @@
-import { ALPHABET, ansi, Color, deepClone, Direction, getPathSymbol, Coordinate, NEWLINE, readFile, example } from "../../shared/util";
+import { ALPHABET, ansi, Color, Coordinate, deepClone, Direction, example, NEWLINE, PathSymbols, readFile } from "../../shared/util";
 
 type Step = { coordinate: Coordinate, direction: Direction };
 type Path = {
@@ -48,7 +48,7 @@ function printPath(message: string, current: Coordinate, path: Path) {
 	let gridCopy = deepClone(grid);
 	let lastStep: Step = {coordinate: undefined, direction: Direction.R};
 	path.steps.forEach(step => {
-		let symbol = getPathSymbol(lastStep.direction, step.direction);
+		let symbol = PathSymbols.getFromDirections(lastStep.direction, step.direction).symbol;
 		gridCopy[step.coordinate.row][step.coordinate.col] = ansi(Color.YELLOW, symbol);
 		lastStep = step;
 	});

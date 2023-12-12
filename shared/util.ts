@@ -1,31 +1,41 @@
 import fs from 'fs';
 
+export function arg(...options: string[]) {
+	return !!findArg(...options);
+}
+
+export function argValue(...options: string[]) {
+	return findArg(...options)?.split("=")[1];
+}
+
+export function findArg(...options: string[]) {
+	return process.argv.find(arg => {
+		for (let option of options)
+			if (arg.startsWith(option))
+				return true;
+
+		return false;
+	});
+}
+
 export function example(): boolean {
-	return !!process.argv.find(arg => arg.startsWith("-e") || arg.startsWith("--example"));
+	return arg("-e", "--example");
 }
 
 export function exampleFile(): string {
-	let arg = process.argv.find(arg => arg.startsWith("-e") || arg.startsWith("--example"));
-	if (!arg)
-		return null;
+	let argument = findArg("-e", "--example");
+	return !argument ? null : "example" + (argument?.split("=")[1] ?? "");
 
-	return "example" + (arg?.split("=")[1] ?? "");
 }
 
 export function inputFile(): string {
-	let arg = process.argv.find(arg => arg.startsWith("-i") || arg.startsWith("--input"));
-	if (!arg)
-		return "input";
+	let argument = findArg("-i", "--input");
+	return !argument ? "input" : "input" + (argument?.split("=")[1] ?? "");
 
-	return "input" + (arg?.split("=")[1] ?? "");
 }
 
 export function part(): number {
-	let arg = process.argv.find(arg => arg.startsWith("-p") || arg.startsWith("--part"));
-	if (!arg)
-		return null;
-
-	return Number(arg.split("=")[1]);
+	return findArg("-p", "--part")?.split("=")[1].asNumber();
 }
 
 declare global {
@@ -55,6 +65,7 @@ declare global {
 
 	interface String {
 		binaryToDecimal(): number;
+		asNumber(): number;
 		asNumberArray(splitter: string | RegExp): number[];
 		sort(): string;
 		includesAll(characters: string): boolean;
@@ -189,6 +200,10 @@ String.prototype.binaryToDecimal = function(): number {
 	return parseInt(this, 2);
 }
 
+String.prototype.asNumber = function(): number {
+	return Number(this)
+}
+
 String.prototype.asNumberArray = function(splitter: string | RegExp): number[] {
 	return this.split(splitter).map(number => Number(number));
 }
@@ -284,44 +299,86 @@ export class Direction {
 	}
 }
 
-export let pathSymbols: {last: Direction, current: Direction, symbol: string}[] = [
-	{last: Direction.R, current: Direction.R, symbol: "─"},
-	{last: Direction.L, current: Direction.L, symbol: "─"},
+export type PathSymbol2 = {
+	exit1: Direction,
+	exit2: Direction,
+	symbol: string,
+	keyboardSymbol: string
+	reversible?: boolean
+}
 
-	{last: Direction.U, current: Direction.U, symbol: "│"},
-	{last: Direction.D, current: Direction.D, symbol: "│"},
+export type PathSymbol = {
+	last: Direction,
+	current: Direction,
+	symbol: string,
+	keyboardSymbol: string
+	reversible?: boolean
+}
 
-	{last: Direction.D, current: Direction.R, symbol: "└"},
-	{last: Direction.L, current: Direction.U, symbol: "└"},
+export class PathSymbols2 {
 
-	{last: Direction.R, current: Direction.U, symbol: "┘"},
-	{last: Direction.D, current: Direction.L, symbol: "┘"},
+	static getFromEntryPoint(entry: Direction): PathSymbol2 {
+		return PathSymbols2.symbols.find(symbol => symbol.exit1 == entry.getOpposite() || symbol.exit2 == entry.getOpposite());
+	}
 
-	{last: Direction.U, current: Direction.R, symbol: "┌"},
-	{last: Direction.L, current: Direction.D, symbol: "┌"},
+	static getFromKeyboardSymbol(keyboardSymbol: string): PathSymbol2 {
+		return PathSymbols2.symbols.find(symbol => symbol.keyboardSymbol == keyboardSymbol) ?? {exit1: null, exit2: null, symbol: keyboardSymbol, keyboardSymbol: keyboardSymbol};
+	}
 
-	{last: Direction.R, current: Direction.D, symbol: "┐"},
-	{last: Direction.U, current: Direction.L, symbol: "┐"}
-]
+	static symbols: PathSymbol2[] = [
+		{exit1: Direction.R, exit2: Direction.L, symbol: "─", keyboardSymbol: "-"},
+		{exit1: Direction.U, exit2: Direction.D, symbol: "│", keyboardSymbol: "|"},
+		{exit1: Direction.U, exit2: Direction.R, symbol: "└", keyboardSymbol: "L"},
+		{exit1: Direction.L, exit2: Direction.U, symbol: "┘", keyboardSymbol: "J"},
+		{exit1: Direction.D, exit2: Direction.R, symbol: "┌", keyboardSymbol: "F"},
+		{exit1: Direction.L, exit2: Direction.D, symbol: "┐", keyboardSymbol: "7"},
+	]
+}
 
-export function getPathSymbol(last: Direction, current: Direction): string {
-	return pathSymbols.find(symbol => symbol.last == last && symbol.current == current).symbol;
+export class PathSymbols {
+	static getFromDirections(last: Direction, current: Direction): PathSymbol {
+		return PathSymbols.symbols.find(symbol => symbol.last == last && symbol.current == current);
+	}
+
+	static getFromKeyboardSymbol(keyboardSymbol: string): PathSymbol {
+		return PathSymbols.symbols.find(symbol => symbol.keyboardSymbol == keyboardSymbol) ?? {last: null, current: null, symbol: keyboardSymbol, keyboardSymbol: keyboardSymbol};
+	}
+
+	static symbols: PathSymbol[] = [
+		{last: Direction.R, current: Direction.R, symbol: "─", keyboardSymbol: "-", reversible: true},
+		{last: Direction.L, current: Direction.L, symbol: "─", keyboardSymbol: "-", reversible: true},
+
+		{last: Direction.U, current: Direction.U, symbol: "│", keyboardSymbol: "|", reversible: true},
+		{last: Direction.D, current: Direction.D, symbol: "│", keyboardSymbol: "|", reversible: true},
+
+		{last: Direction.D, current: Direction.R, symbol: "└", keyboardSymbol: "L"},
+		{last: Direction.L, current: Direction.U, symbol: "└", keyboardSymbol: "L"},
+
+		{last: Direction.R, current: Direction.U, symbol: "┘", keyboardSymbol: "J"},
+		{last: Direction.D, current: Direction.L, symbol: "┘", keyboardSymbol: "J"},
+
+		{last: Direction.U, current: Direction.R, symbol: "┌", keyboardSymbol: "F"},
+		{last: Direction.L, current: Direction.D, symbol: "┌", keyboardSymbol: "F"},
+
+		{last: Direction.R, current: Direction.D, symbol: "┐", keyboardSymbol: "7"},
+		{last: Direction.U, current: Direction.L, symbol: "┐", keyboardSymbol: "7"}
+	]
 }
 
 export class Coordinate {
-	static instances: Map<number, Map<number, Coordinate>> = new Map();
+	static instances: { [key: number]: { [key: number]: Coordinate }} = {};
 
 	private constructor(public row: number, public col: number) {}
 
 	static of(row: number, col: number): Coordinate {
-		if (!this.instances.has(row))
-			this.instances.set(row, new Map());
+		if (!this.instances[row])
+			this.instances[row] = {};
 
-		let rows: any = this.instances.get(row);
-		if (!rows.has(col))
-			rows.set(col, new Coordinate(row, col));
+		let rows: any = this.instances[row];
+		if (!rows[col])
+			rows[col] = new Coordinate(row, col);
 
-		return rows.get(col);
+		return rows[col];
 	}
 
 	move(direction: Direction): Coordinate {
