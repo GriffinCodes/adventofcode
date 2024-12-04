@@ -1,4 +1,4 @@
-import { ArithmeticOperator, NEWLINE, readFile, example } from "../../shared/util";
+import { NEWLINE, readFile, example } from "../../shared/util";
 
 class Monkey {
 	items: number[];
