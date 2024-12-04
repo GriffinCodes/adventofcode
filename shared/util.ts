@@ -22,6 +22,15 @@ export function example(): boolean {
 	return arg("-e", "--example");
 }
 
+export function verbose(): boolean {
+	return arg("-v", "--verbose");
+}
+
+export function debug(...obj: any[]) {
+	if (verbose())
+		console.log(...obj)
+}
+
 export function exampleFile(): string {
 	let argument = findArg("-e", "--example");
 	return !argument ? null : "example" + (argument?.split("=")[1] ?? "");
@@ -36,6 +45,10 @@ export function inputFile(): string {
 
 export function part(): number {
 	return findArg("-p", "--part")?.split("=")[1].asNumber();
+}
+
+export function doPart(number: number): boolean {
+	return part() == null || part() == number
 }
 
 declare global {
@@ -297,6 +310,10 @@ export class Direction {
 	static cardinals(): Direction[] {
 		return Direction.values().filter(direction => direction.vertical == 0 || direction.horizontal == 0);
 	}
+
+	static corners(): Direction[] {
+		return Direction.values().filter(direction => direction.vertical != 0 && direction.horizontal != 0);
+	}
 }
 
 export type PathSymbol2 = {
@@ -477,6 +494,10 @@ export class Iterator {
 		if (this.index() < this.keys.length)
 			return this.iterable[this.keys[this.index()]];
 		return null;
+	}
+
+	hasPrevious() {
+		return this.index() - 1 >= 0;
 	}
 
 	hasNext() {
