@@ -314,6 +314,20 @@ export class Direction {
 	static corners(): Direction[] {
 		return Direction.values().filter(direction => direction.vertical != 0 && direction.horizontal != 0);
 	}
+
+	public turnRight() {
+		if (this == Direction.R) return Direction.D
+		if (this == Direction.D) return Direction.L
+		if (this == Direction.L) return Direction.U
+		if (this == Direction.U) return Direction.R
+	}
+
+	public turnLeft() {
+		if (this == Direction.R) return Direction.U
+		if (this == Direction.U) return Direction.L
+		if (this == Direction.L) return Direction.D
+		if (this == Direction.D) return Direction.R
+	}
 }
 
 export type PathSymbol2 = {
