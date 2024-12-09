@@ -255,6 +255,7 @@ Object.prototype.print = function(): void {
 }
 
 export const NEWLINE = /\r?\n/;
+export const ALL_NEWLINE = /\r?\n/g;
 export const DOUBLE_NEWLINE = /\r?\n\r?\n/;
 export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
