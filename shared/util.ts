@@ -82,6 +82,7 @@ declare global {
 		asNumberArray(splitter: string | RegExp): number[];
 		sort(): string;
 		includesAll(characters: string): boolean;
+		lastCharacter(): string;
 	}
 
 	interface Object {
@@ -233,6 +234,10 @@ String.prototype.includesAll = function(characters: string): boolean {
 	return true;
 }
 
+String.prototype.lastCharacter = function(): string {
+	return this.charAt(this.length - 1)
+}
+
 Object.prototype.sortByValue = function(): { [key: string]: number } {
 	return Object.entries(this)
 		.sort((a, b) => Number(a[1]) - Number(b[1]))
@@ -273,6 +278,10 @@ export function ansi(color: string, text: string) {
 
 export function readFile(filename?: string): string {
 	return fs.readFileSync(filename ?? exampleFile() ?? inputFile(), 'utf8');
+}
+
+export function readFileLines(config?: { filename: string, split: RegExp }): string[] {
+	return readFile(config?.filename).split(config?.split ?? NEWLINE).filter(line => line !== '')
 }
 
 export function deepClone(obj: any) {
@@ -419,6 +428,10 @@ export class Coordinate {
 	equals(other: Coordinate) {
 		return this.row == other.row && this.col == other.col;
 	}
+
+	toString(): string {
+		return `${this.row},${this.col}`
+	}
 }
 
 export class Line {
@@ -524,5 +537,27 @@ export class Iterator {
 
 	length() {
 		return this.keys.length;
+	}
+}
+
+export class GenericGrid<Cell> {
+	grid: Cell[][] = []
+
+	get(location: Coordinate) {
+		return this.grid[location.row]?.[location.col]
+	}
+
+	isOutOfBounds(location: Coordinate): boolean {
+		return this.get(location) == null
+	}
+
+	coordinates() {
+		return this.grid.flatMap((row, rowIndex) =>
+			row.map((_, columnIndex) => Coordinate.of(rowIndex, columnIndex))
+		);
+	}
+
+	forEach(func: (coordinate: Coordinate) => void) {
+		this.coordinates().forEach(coordinate => func(coordinate))
 	}
 }
