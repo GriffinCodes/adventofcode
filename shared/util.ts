@@ -544,6 +544,10 @@ export class Iterator {
 export class GenericGrid<Cell> {
 	grid: Cell[][] = []
 
+	addRow(row: Cell[]) {
+		return this.grid.push(row)
+	}
+
 	get(location: Coordinate) {
 		return this.grid[location.row]?.[location.col]
 	}

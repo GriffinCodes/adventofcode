@@ -1,36 +1,30 @@
-import { Coordinate, Direction, doPart, GenericGrid, readFileLines } from "../../shared/util"
+import { Coordinate, Direction, doPart, GenericGrid, Iterator, readFileLines } from "../../shared/util"
 
 class Cell {
 	constructor(public character: string) {}
 }
 
-let grid = new class extends GenericGrid<Cell> {}()
+let grid = new GenericGrid<Cell>()
 
-readFileLines().forEach(line => grid.grid.push(line.split('').map(char => new Cell(char))))
+readFileLines().forEach(line => grid.addRow(line.split('').map(char => new Cell(char))))
 
 if (doPart(1)) {
-	let lookingFor = "XMAS"
 	let part1 = 0
+	let lookingFor = 'XMAS'.split('')
 
-	function check(coordinate: Coordinate, direction: Direction, expected: string = "X") {
-		if (grid.isOutOfBounds(coordinate))
+	function check(coordinate: Coordinate, direction: Direction, iterator: Iterator) {
+		if (grid.get(coordinate)?.character != iterator.next())
 			return
 
-		let cell = grid.get(coordinate)
-		if (cell.character != expected)
-			return
-
-		if (expected == lookingFor.lastCharacter())
+		if (!iterator.hasNext())
 			return ++part1
 
-		let nextCoordinate = coordinate.move(direction);
-		let nextCharacter = lookingFor.charAt(lookingFor.indexOf(expected) + 1)
-		check(nextCoordinate, direction, nextCharacter)
+		check(coordinate.move(direction), direction, iterator)
 	}
 
 	grid.forEach(coordinate => {
 		for (let direction of Direction.values())
-			check(coordinate, direction, lookingFor.charAt(0))
+			check(coordinate, direction, lookingFor.iterator())
 	})
 
 	console.log('part1', part1)
