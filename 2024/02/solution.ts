@@ -17,7 +17,7 @@ readFileLines().forEach(line => {
 		if (!originalSign)
 			originalSign = sign
 
-		if (sign !== originalSign || !(diff >= 1 && diff <= 3))
+		if (sign !== originalSign || diff < 1 || diff > 3)
 			++unsafe
 
 		previous = current

@@ -1,4 +1,4 @@
-import { ALL_NEWLINE, example, readFile } from "../../shared/util"
+import { ALL_NEWLINE, readFile } from "../../shared/util"
 
 let part1 = readFile().replace(ALL_NEWLINE, '')
 let part2 = part1.replace(/don't\(\).*?($|do\(\))/g, '_')
