@@ -29,13 +29,8 @@ for (let update of updates) {
 	for (const rule of rules) {
 		let indexOf1 = update.indexOf(rule[0])
 		let indexOf2 = update.indexOf(rule[1])
-		if (indexOf1 == -1 || indexOf2 == -1)
-			continue;
-
-		if (indexOf1 <= indexOf2)
-			continue;
-
-		valid = false
+		if (indexOf1 != -1 && indexOf2 != -1 && indexOf1 > indexOf2)
+			valid = false
 	}
 
 	let middleIndex = fixed.length / 2;
