@@ -258,6 +258,7 @@ export const NEWLINE = /\r?\n/;
 export const ALL_NEWLINE = /\r?\n/g;
 export const DOUBLE_NEWLINE = /\r?\n\r?\n/;
 export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+export const NOT_EMPTY_STRING = str => str != ''
 
 // https://talyian.github.io/ansicolors/
 export class Color {
@@ -282,7 +283,7 @@ export function readFile(filename?: string): string {
 }
 
 export function readFileLines(config?: { filename: string, split: RegExp }): string[] {
-	return readFile(config?.filename).split(config?.split ?? NEWLINE).filter(line => line !== '')
+	return readFile(config?.filename).split(config?.split ?? NEWLINE).filter(NOT_EMPTY_STRING)
 }
 
 export function deepClone(obj: any) {

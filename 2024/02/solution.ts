@@ -1,50 +1,34 @@
-import { example, NEWLINE, readFile } from "../../shared/util";
+import { readFileLines } from "../../shared/util"
 
-let safe = 0;
+let part1 = 0
+let part2 = 0
 
-readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
-	if (line == '')
-		return;
-	console.log('====')
-	console.log(line)
-
+readFileLines().forEach(line => {
 	let levels = line.split(' ').map(level => Number(level))
 
-	let unsafe = 0;
-	let last;
-	let originalSign
-	for (let level of levels) {
-		if (!last) {
-			last = level
-			continue;
-		}
+	let unsafe = 0
+	let originalSign = 0
+	let previous = levels.shift()
 
-		let diff = level - last
-		console.log('last', last, 'level', level, 'diff', diff)
+	for (let current of levels) {
+		let diff = Math.abs(current - previous)
+		let sign = Math.sign(current - previous)
 
-		let sign = Math.sign(diff);
-		console.log('sign', sign)
-		if (!originalSign) {
+		if (!originalSign)
 			originalSign = sign
-		}
 
-		diff = Math.abs(diff)
+		if (sign !== originalSign || !(diff >= 1 && diff <= 3))
+			++unsafe
 
-		if (sign != originalSign) {
-			console.log('unsafe - switch')
-			if (++unsafe == 2)
-				return;
-		} else if (!(diff >= 1 && diff <= 3)) {
-			console.log('unsafe -', diff)
-			if (++unsafe == 2)
-				return
-		}
-
-		last = level
+		previous = current
 	}
 
-	console.log('safe')
-	++safe;
-});
+	if (unsafe == 0)
+		++part1
 
-console.log(safe)
+	if (unsafe <= 1)
+		++part2
+})
+
+console.log('part1', part1)
+console.log('part2', part2)

@@ -1,39 +1,24 @@
-import { example, NEWLINE, readFile } from "../../shared/util";
+import { readFileLines } from "../../shared/util"
 
-let left = [];
-let right = [];
+let left = []
+let right = []
 
-readFile(example() ? 'example' : 'input').split(NEWLINE).forEach(line => {
-	let numbers = line.replace(/ +/g, ' ').split(' ')
-	if (numbers.length != 2)
-		return;
-	console.log(line, numbers)
+readFileLines().forEach(line => {
+	let numbers = line.split(/ +/)
 	left.push(Number(numbers[0]))
 	right.push(Number(numbers[1]))
-});
+})
 
 left.sort()
 right.sort()
 
-console.log(left)
-console.log(right)
+let part1 = 0
+left.forEach((_, i) =>
+	part1 += Math.max(left[i], right[i]) - Math.min(left[i], right[i]))
 
-let totalDiff = 0;
+let part2 = 0
+left.forEach((leftElement) =>
+	part2 += leftElement * right.filter(rightElement => rightElement === leftElement).length)
 
-for (let i = 0; i < left.length; i++) {
-	let leftI = left[i];
-	let rightI = right[i];
-	let diff = Math.max(leftI, rightI) - Math.min(leftI, rightI)
-	console.log(diff)
-	totalDiff += diff;
-}
-
-console.log(totalDiff)
-
-let totalSimilarity = 0;
-for (let leftElement of left) {
-	let count = right.filter(rightElement => rightElement === leftElement).length
-	totalSimilarity += leftElement * count
-}
-
-console.log(totalSimilarity)
+console.log('part1', part1)
+console.log('part2', part2)
